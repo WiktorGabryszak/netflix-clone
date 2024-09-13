@@ -29,7 +29,7 @@ const authConfig = {
 		async session({ session, user }) {
 			const userData = await getUser(session.user.email);
 
-			// session.user.guestId = guest.id;
+			session.user.userId = userData.id;
 			return session;
 		},
 	},
@@ -44,12 +44,6 @@ export const {
 	signOut,
 	handlers: { GET, POST },
 } = NextAuth(authConfig);
-
-
-
-
-
-
 
 // const authConfig = {
 // 	providers: [
@@ -84,5 +78,3 @@ export const {
 // 			},
 // 		}),
 // 	],
-
-

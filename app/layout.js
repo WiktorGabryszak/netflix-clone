@@ -1,10 +1,5 @@
-import { Roboto } from "next/font/google";
 import "@/app/_styles/globals.css";
-import Header from "./_components/Header";
-import Footer from "./_components/Footer";
-import { supabase } from "./_lib/supabase";
-import { getCurrentUser } from "./_lib/data-service";
-import { auth } from "./_lib/auth";
+import { Roboto } from "next/font/google";
 
 const roboto = Roboto({
 	subsets: ["latin"],
@@ -20,21 +15,9 @@ export const metadata = {
 };
 
 export default async function RootLayout({ children }) {
-	const session = await auth();
-
 	return (
 		<html lang='en'>
-			<body className={`${roboto.className}`}>
-				{session === null ? (
-					<main className='h-full'>{children}</main>
-				) : (
-					<>
-						<Header />
-						<main className='h-full'>{children}</main>
-						<Footer />
-					</>
-				)}
-			</body>
+			<body className={`${roboto.className}`}>{children}</body>
 		</html>
 	);
 }

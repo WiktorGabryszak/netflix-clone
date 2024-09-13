@@ -6,5 +6,5 @@ const publicRoutes = ["/login"];
 export const middleware = auth;
 
 export const config = {
-	matcher: ["/"],
+	matcher: ["/", "/browse"],
 };

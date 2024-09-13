@@ -1,15 +1,16 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+	
 	images: {
 		remotePatterns: [
-			{
-				protocol: "https",
-				hostname: "eyjeetsqbuaylkzeejtf.supabase.co",
-				port: "",
-				pathname: "/storage/v1/object/public/avatars/**",
-			},
+		  {
+			protocol: 'https',
+			hostname: 'image.tmdb.org',
+			port: '',
+			pathname: '/t/p/original/**',
+		  },
 		],
-	},
+	  },
 	// output: "export",
 };
 

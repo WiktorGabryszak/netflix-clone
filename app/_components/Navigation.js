@@ -1,22 +1,24 @@
+"use client";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 
-function Navigation() {
+export default function Navigation() {
+	const pathname = usePathname()
 	return (
 		<nav className='flex items-center gap-6 text-sm text-neutral-300'>
 			<ul>
 				<li>
 					<Link
-						href='/'
-						className='transition-colors duration-300 hover:text-neutral-400'>
+						href='/browse'
+						className={`transition-colors duration-300 hover:text-neutral-400 ${pathname === '/browse' && 'text-zinc-100'}`}>
 						Home
 					</Link>
 				</li>
 			</ul>
-			{/* {CHANGE LATER} */}
 			<ul>
 				<li>
 					<Link
-						href='/genre/tvShows'
+						href='browse/genre/tvShows'
 						className='transition-colors duration-300 hover:text-neutral-400'>
 						TV Shows
 					</Link>
@@ -25,7 +27,7 @@ function Navigation() {
 			<ul>
 				<li>
 					<Link
-						href='/genre/Movies'
+						href='browse/genre/Movies'
 						className='transition-colors duration-300 hover:text-neutral-400'>
 						Movies
 					</Link>
@@ -34,7 +36,7 @@ function Navigation() {
 			<ul>
 				<li>
 					<Link
-						href='/latest'
+						href='browse/latest'
 						className='transition-colors duration-300 hover:text-neutral-400'>
 						New & Popular
 					</Link>
@@ -43,8 +45,8 @@ function Navigation() {
 			<ul>
 				<li>
 					<Link
-						href='/myList'
-						className='transition-colors duration-300 hover:text-neutral-400'>
+						href='/my-list'
+						className={`transition-colors duration-300 hover:text-neutral-400 ${pathname === '/my-list' && 'text-zinc-100'}`}>
 						My List
 					</Link>
 				</li>
@@ -52,7 +54,7 @@ function Navigation() {
 			<ul>
 				<li>
 					<Link
-						href='/original-audio'
+						href='browse/original-audio'
 						className='transition-colors duration-300 hover:text-neutral-400'>
 						Browse by Languages
 					</Link>
@@ -61,5 +63,3 @@ function Navigation() {
 		</nav>
 	);
 }
-
-export default Navigation;

@@ -1,42 +1,22 @@
 import netflixIcon from "@/public/netflix.png";
-import profile1 from "@/public/profile1.png";
-import {
-	BellIcon,
-	ChevronDownIcon,
-	MagnifyingGlassIcon,
-} from "@heroicons/react/24/solid";
 import Image from "next/image";
+import Link from "next/link";
 import Navigation from "./Navigation";
+import ProfileButtons from "./ProfileButton";
 
-function Header() {
+async function Header() {
+	// ${isScrolled ? "bg-neutral-950/80" : "bg-opacity-0"}
+
 	return (
-		<header className='px-14 bg-neutral-950 max-h-[68px] flex items-center justify-between'>
+		<header
+			className={`px-14  h-[68px] flex items-center justify-between sticky top-0 z-[10000]`}>
 			<section className='flex gap-10'>
-				<div className='relative aspect-square'>
+				<Link href='/browse' className='relative aspect-square'>
 					<Image src={netflixIcon} width={94} alt='Netflix Icon' />
-				</div>
+				</Link>
 				<Navigation />
 			</section>
-			<section className='flex items-center gap-4 justify-normal'>
-				<button>
-					<MagnifyingGlassIcon className='w-6 h-6 text-neutral-50' />
-				</button>
-				<button>
-					<BellIcon className='w-6 h-6 text-neutral-50' />
-				</button>
-				<div className='flex items-center gap-1'>
-					<Image
-						src={profile1}
-						width={32}
-						height={32}
-						className='rounded-md'
-						alt='Profile Image of User'
-					/>
-					<button>
-						<ChevronDownIcon className='w-4 h-4 text-neutral-50' />
-					</button>
-				</div>
-			</section>
+			<ProfileButtons />
 		</header>
 	);
 }

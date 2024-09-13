@@ -1,11 +1,18 @@
-import Link from "next/link";
-import { auth } from "./_lib/auth";
+import ProfileComponent from "./_components/ProfileComponent";
 
-export default async function Home() {
-	
+function page() {
 	return (
-		<div>
-			<h1>Hello</h1>
-		</div>
+		<main className='h-full grid items-center'>
+			<div className='flex item-center justify-center'>
+				<div className='flex flex-col'>
+					<div className='text-3xl md:text-5xl text-white text-center'>
+						Who is watching?
+					</div>
+					<ProfileComponent />
+				</div>
+			</div>
+		</main>
 	);
 }
+
+export default page;

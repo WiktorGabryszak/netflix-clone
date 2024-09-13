@@ -57,3 +57,97 @@ export async function createUser(newUser) {
 
 	return data;
 }
+
+///////////////
+// TMDB
+//////////////
+
+export async function fetchMovies(type) {
+	const options = {
+		method: "GET",
+		headers: {
+			accept: "application/json",
+			Authorization: `Bearer ${process.env.TMDB_API_KEY}`,
+		},
+	};
+
+	const res = await fetch(
+		`https://api.themoviedb.org/3/movie/${type}`,
+		options
+	);
+	const data = await res.json();
+	if (data.Response === "False") throw new Error("Movies not found");
+
+	return data;
+}
+
+export async function fetchShows(type) {
+	const options = {
+		method: "GET",
+		headers: {
+			accept: "application/json",
+			Authorization: `Bearer ${process.env.TMDB_API_KEY}`,
+		},
+	};
+
+	const res = await fetch(`https://api.themoviedb.org/3/tv/${type}`, options);
+	const data = await res.json();
+	if (data.Response === "False") throw new Error("Shows not found");
+
+	return data;
+}
+
+export async function fetchMovieById(id) {
+	const options = {
+		method: "GET",
+		headers: {
+			accept: "application/json",
+			Authorization: `Bearer ${process.env.TMDB_API_KEY}`,
+		},
+	};
+
+	const res = await fetch(`https://api.themoviedb.org/3/movie/${id}`, options);
+	const data = await res.json();
+	if (data.Response === "False") throw new Error("Movie not found");
+
+	return data;
+}
+
+////////////////////////
+// My list ( Actions )
+///////////////////////
+
+export async function getMovieFromList(movie_id) {
+	const { data } = await supabase
+		.from("my_movies")
+		.select("*")
+		.eq("movie_id", movie_id)
+		.single();
+
+	return data;
+}
+
+export async function getMoviesFromList() {
+	const { data, error } = await supabase.from("my_movies").select("movie_id");
+
+	if (error) {
+		console.error(error);
+		throw new Error("Movies could not be found");
+	}
+
+	return data;
+}
+
+export async function getMoviesFromMyList(userId) {
+	const { data, error } = await supabase
+		.from("my_movies")
+		.select("*")
+		.eq("user_id", userId);
+
+	if (error) {
+		console.error(error);
+		throw new Error("Movies could not get loaded");
+	}
+
+	return data;
+}
