@@ -3,14 +3,16 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 
 export default function Navigation() {
-	const pathname = usePathname()
+	const pathname = usePathname();
 	return (
 		<nav className='flex items-center gap-6 text-sm text-neutral-300'>
 			<ul>
 				<li>
 					<Link
 						href='/browse'
-						className={`transition-colors duration-300 hover:text-neutral-400 ${pathname === '/browse' && 'text-zinc-100'}`}>
+						className={`transition-colors duration-300 hover:text-neutral-400 ${
+							pathname === "/browse" && "text-zinc-100"
+						}`}>
 						Home
 					</Link>
 				</li>
@@ -18,8 +20,10 @@ export default function Navigation() {
 			<ul>
 				<li>
 					<Link
-						href='browse/genre/tvShows'
-						className='transition-colors duration-300 hover:text-neutral-400'>
+						href='/browse/tv-shows'
+						className={`transition-colors duration-300 hover:text-neutral-400 ${
+							pathname === "/browse/tv-shows" && "text-zinc-100"
+						}`}>
 						TV Shows
 					</Link>
 				</li>
@@ -27,8 +31,10 @@ export default function Navigation() {
 			<ul>
 				<li>
 					<Link
-						href='browse/genre/Movies'
-						className='transition-colors duration-300 hover:text-neutral-400'>
+						href='/browse/movies'
+						className={`transition-colors duration-300 hover:text-neutral-400 ${
+							pathname === "/browse/movies" && "text-zinc-100"
+						}`}>
 						Movies
 					</Link>
 				</li>
@@ -36,8 +42,10 @@ export default function Navigation() {
 			<ul>
 				<li>
 					<Link
-						href='browse/latest'
-						className='transition-colors duration-300 hover:text-neutral-400'>
+						href='/latest'
+						className={`transition-colors duration-300 hover:text-neutral-400 ${
+							pathname === "/latest" && "text-zinc-100"
+						}`}>
 						New & Popular
 					</Link>
 				</li>
@@ -46,7 +54,9 @@ export default function Navigation() {
 				<li>
 					<Link
 						href='/my-list'
-						className={`transition-colors duration-300 hover:text-neutral-400 ${pathname === '/my-list' && 'text-zinc-100'}`}>
+						className={`transition-colors duration-300 hover:text-neutral-400 ${
+							pathname === "/my-list" && "text-zinc-100"
+						}`}>
 						My List
 					</Link>
 				</li>

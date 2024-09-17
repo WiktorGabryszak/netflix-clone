@@ -1,7 +1,6 @@
 import Link from "next/link";
 
 function MovieItem({ data }) {
-	console.log("to dane", data);
 	return (
 		<Link
 			className='group bg-zinc-900 relative min-w-[290px] rounded-md'

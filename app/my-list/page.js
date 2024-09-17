@@ -35,7 +35,6 @@ async function page() {
 					))}
 				</div>
 			</main>
-
 			<Footer />
 		</>
 	);

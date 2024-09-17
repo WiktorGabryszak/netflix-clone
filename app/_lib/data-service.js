@@ -62,7 +62,7 @@ export async function createUser(newUser) {
 // TMDB
 //////////////
 
-export async function fetchMovies(type) {
+export async function fetchMovies(type, page) {
 	const options = {
 		method: "GET",
 		headers: {
@@ -72,7 +72,7 @@ export async function fetchMovies(type) {
 	};
 
 	const res = await fetch(
-		`https://api.themoviedb.org/3/movie/${type}`,
+		`https://api.themoviedb.org/3/movie/${type}?page=${page}`,
 		options
 	);
 	const data = await res.json();
@@ -81,7 +81,7 @@ export async function fetchMovies(type) {
 	return data;
 }
 
-export async function fetchShows(type) {
+export async function fetchShows(type, page) {
 	const options = {
 		method: "GET",
 		headers: {
@@ -90,7 +90,10 @@ export async function fetchShows(type) {
 		},
 	};
 
-	const res = await fetch(`https://api.themoviedb.org/3/tv/${type}`, options);
+	const res = await fetch(
+		`https://api.themoviedb.org/3/tv/${type}?page=${page}`,
+		options
+	);
 	const data = await res.json();
 	if (data.Response === "False") throw new Error("Shows not found");
 
@@ -109,6 +112,25 @@ export async function fetchMovieById(id) {
 	const res = await fetch(`https://api.themoviedb.org/3/movie/${id}`, options);
 	const data = await res.json();
 	if (data.Response === "False") throw new Error("Movie not found");
+
+	return data;
+}
+
+export async function fetchMoviesGenres() {
+	const options = {
+		method: "GET",
+		headers: {
+			accept: "application/json",
+			Authorization: `Bearer ${process.env.TMDB_API_KEY}`,
+		},
+	};
+
+	const res = await fetch(
+		`https://api.themoviedb.org/3/genre/movie/list`,
+		options
+	);
+	const data = await res.json();
+	if (data.Response === "False") throw new Error("Movie genres not found");
 
 	return data;
 }

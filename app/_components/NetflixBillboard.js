@@ -1,18 +1,9 @@
-import { InformationCircleIcon, PlayIcon } from "@heroicons/react/24/solid";
+import { InformationCircleIcon } from "@heroicons/react/24/solid";
 import Image from "next/image";
-import { fetchMovieById } from "../_lib/data-service";
 import Link from "next/link";
 import PlayButton from "./PlayButton";
 
-export default async function NetflixBillboard() {
-	let randomMovie;
-	let data = [];
-
-	do {
-		randomMovie = Math.floor(Math.random() * 10000);
-		data = await fetchMovieById(randomMovie);
-	} while (!data.backdrop_path);
-
+export default function NetflixBillboard({ data }) {
 	return (
 		<>
 			<Image

@@ -44,7 +44,7 @@ export async function addMovieToList(movieData) {
 		console.error(error);
 		throw new Error("Movie could not be added to the list");
 	}
-	revalidatePath(`/browse/${movieData.movie_id}`);
+	revalidatePath(`/my-list`);
 }
 
 export async function deleteMovieFromList(movie_id) {
@@ -53,7 +53,6 @@ export async function deleteMovieFromList(movie_id) {
 
 	const userMovies = await getMoviesFromMyList(session.user.userId);
 	const userMoviesIds = userMovies.map((movie) => movie.movie_id);
-	
 
 	if (!userMoviesIds.includes(movie_id))
 		throw new Error("You are not allowed to delete this movie");
@@ -67,5 +66,5 @@ export async function deleteMovieFromList(movie_id) {
 		console.error(error);
 		throw new Error("Movie could not be deleted");
 	}
-	revalidatePath(`/browse/${movie_id}`);
+	revalidatePath(`/my-list`);
 }
