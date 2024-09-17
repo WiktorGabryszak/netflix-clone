@@ -17,14 +17,26 @@ import {
 } from "@mui/material";
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";
 
 function ProfileButtons() {
 	const [isHoverProfile, setIsHoverProfile] = useState(false);
 	const [isOpenInput, setIsOpenInput] = useState(false);
+	const [queryValue, setQueryValue] = useState("");
+
+	const searchParams = useSearchParams();
+	const { replace } = useRouter();
 
 	function handleSubmit(e) {
 		e.preventDefault();
+		const params = new URLSearchParams(searchParams);
+		if (queryValue) {
+			params.set("query", queryValue);
+		} else {
+			params.delete("query");
+		}
+		replace(`/search?${params.toString()}`);
 	}
 
 	return (
@@ -40,10 +52,12 @@ function ProfileButtons() {
 						<MagnifyingGlassIcon className='w-6 h-6 text-neutral-50' />
 						<input
 							type='text'
+							value={queryValue}
 							className={`bg-zinc-900 focus:outline-none text-zinc-100 placeholder:text-sm text-sm ${
 								isOpenInput ? "w-64 opacity-100" : "w-0 opacity-0"
 							}`}
 							placeholder='Titles, people, genres'
+							onChange={(e) => setQueryValue(e.target.value)}
 						/>
 					</div>
 				</form>

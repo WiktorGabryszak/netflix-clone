@@ -30,7 +30,7 @@ export default function MovieSlider({ data }) {
 			onMouseEnter={() => setShowArrows(true)}
 			onMouseLeave={() => setShowArrows(false)}
 			ref={sliderRef}>
-			{data.results.map((movie) => (
+			{data?.results?.map((movie) => (
 				<MovieItem key={movie.id} data={movie} />
 			))}
 			{showArrows && (
