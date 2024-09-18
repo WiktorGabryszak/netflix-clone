@@ -12,14 +12,14 @@ async function layout({ children }) {
 		data = await fetchMovieById(randomMovie);
 	} while (!data.backdrop_path);
 	return (
-		<>
+		<div>
 			<Header />
 			<main>
 				<NetflixBillboard data={data} />
 				{children}
 			</main>
 			<Footer />
-		</>
+		</div>
 	);
 }
 

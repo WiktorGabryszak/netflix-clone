@@ -9,7 +9,7 @@ export default async function page({ children }) {
 	const topRatedShows = await fetchShows("top_rated", 1);
 	const onTheAirShows = await fetchShows("on_the_air", 1);
 	return (
-		<div>
+		<div >
 			<MovieList title='Popular Movies' data={popularMovies} />
 			<MovieList title='Popular Shows' data={popularShows} />
 			<MovieList title='Top-Rated Shows' data={topRatedShows} />

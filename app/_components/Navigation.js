@@ -64,8 +64,10 @@ export default function Navigation() {
 			<ul>
 				<li>
 					<Link
-						href='browse/original-audio'
-						className='transition-colors duration-300 hover:text-neutral-400'>
+						href='/browse/original-audio'
+						className={`transition-colors duration-300 hover:text-neutral-400 ${
+							pathname === "/browse/original-audio" && "text-zinc-100"
+						}`}>
 						Browse by Languages
 					</Link>
 				</li>

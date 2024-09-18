@@ -1,9 +1,5 @@
 function Footer() {
-    return (
-        <div>
-            
-        </div>
-    )
+	return <div className='bg-zinc-900'></div>;
 }
 
-export default Footer
+export default Footer;

@@ -191,9 +191,11 @@ export async function fetchShowByQuery(query) {
 	return data;
 }
 
-export async function fetchShowsByGenre(genre, page) {
+export async function fetchShowsByGenre(genre, page, type) {
 	// const randomNumber = Math.floor(Math.random() * 8);
 	// console.log(randomNumber)
+
+
 	const options = {
 		method: "GET",
 		headers: {
@@ -203,7 +205,29 @@ export async function fetchShowsByGenre(genre, page) {
 	};
 
 	const res = await fetch(
-		`https://api.themoviedb.org/3/discover/tv?with_genres=${genre}&page=${page}`,
+		`https://api.themoviedb.org/3/discover/tv?with_genres=${genre}&page=${page}&sort_by=${type}`,
+		options
+	);
+	const data = await res.json();
+	if (data.Response === "False") throw new Error("Shows not found");
+
+	return data;
+}
+
+export async function fetchMoviesByGenre(genre, page, type) {
+	// const randomNumber = Math.floor(Math.random() * 8);
+	// console.log(randomNumber)
+
+	const options = {
+		method: "GET",
+		headers: {
+			accept: "application/json",
+			Authorization: `Bearer ${process.env.TMDB_API_KEY}`,
+		},
+	};
+
+	const res = await fetch(
+		`https://api.themoviedb.org/3/discover/movie?with_genres=${genre}&page=${page}&sort_by=${type}`,
 		options
 	);
 	const data = await res.json();

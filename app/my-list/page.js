@@ -12,7 +12,7 @@ async function page() {
 	const session = await auth();
 	const movies = await getMoviesFromMyList(session.user.userId);
 	return (
-		<>
+		<div className="bg-zinc-900 h-full">
 			<Header />
 			<main className='px-14 py-7 flex flex-col gap-8'>
 				<h2 className='text-zinc-100 text-4xl font-normal'>My List</h2>
@@ -36,7 +36,7 @@ async function page() {
 				</div>
 			</main>
 			<Footer />
-		</>
+		</div>
 	);
 }
 

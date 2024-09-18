@@ -1,9 +1,14 @@
+"use client";
+
 import { InformationCircleIcon } from "@heroicons/react/24/solid";
 import Image from "next/image";
 import Link from "next/link";
 import PlayButton from "./PlayButton";
+import { usePathname } from "next/navigation";
 
 export default function NetflixBillboard({ data }) {
+	const pathname = usePathname();
+	if (pathname.includes("movies") || pathname.includes("tv-shows") || pathname.includes("original-audio")) return null;
 	return (
 		<>
 			<Image

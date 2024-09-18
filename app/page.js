@@ -2,7 +2,7 @@ import ProfileComponent from "./_components/ProfileComponent";
 
 function page() {
 	return (
-		<main className='h-full grid items-center'>
+		<main className='h-full grid items-center bg-zinc-900'>
 			<div className='flex item-center justify-center'>
 				<div className='flex flex-col'>
 					<div className='text-3xl md:text-5xl text-white text-center'>

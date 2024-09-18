@@ -10,7 +10,7 @@ async function page() {
 	const onTheAirShows = await fetchShows("on_the_air", 1);
 
 	return (
-		<main>
+		<main className="bg-zinc-900">
 			<Header />
 			<MovieList title='Upcoming Movies' data={upcomingMovies} />
 			<MovieList title='Popular Movies' data={popularMovies} />

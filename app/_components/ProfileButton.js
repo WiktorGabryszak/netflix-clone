@@ -123,7 +123,7 @@ function ProfileButtons() {
 							</MenuItem>
 							<MenuItem>
 								<Link
-									href=''
+									href='/account'
 									className='flex items-center gap-2 text-sm hover:underline w-full'>
 									<ListItemIcon>
 										<UserIcon className='h-7 w-7 text-zinc-100 text-center' />
