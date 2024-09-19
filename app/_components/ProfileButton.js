@@ -19,6 +19,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";
+import { signOutAction } from "../_lib/actions";
 
 function ProfileButtons() {
 	const [isHoverProfile, setIsHoverProfile] = useState(false);
@@ -134,11 +135,11 @@ function ProfileButtons() {
 
 							<Divider className='bg-zinc-600' />
 							<MenuItem>
-								<Link
-									href='/api/auth/signout'
-									className='flex items-center justify-center gap-2 text-sm hover:underline w-full'>
-									Sign out of Netflix
-								</Link>
+								<form action={signOutAction} >
+									<button className='flex items-center justify-center gap-2 text-sm hover:underline w-full'>
+										Sign out of Netflix
+									</button>
+								</form>
 							</MenuItem>
 						</MenuList>
 					</Paper>
