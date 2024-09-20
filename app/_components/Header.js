@@ -6,7 +6,7 @@ function Header() {
 
 	return (
 		<>
-			<HeaderContent>
+			<HeaderContent >
 				<GenresSelector />
 			</HeaderContent>
 		</>

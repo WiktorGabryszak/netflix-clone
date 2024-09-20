@@ -38,6 +38,7 @@ const navLinks = [
 
 function AccountNavBar() {
 	const pathname = usePathname();
+
 	return (
 		<nav>
 			<ul className='flex flex-col h-full gap-2 text-base'>

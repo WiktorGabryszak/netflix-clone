@@ -1,13 +1,15 @@
+import AccountTitle from "@/app/_components/AccountTitle";
 import SecurityContainer from "@/app/_components/SecurityContainer";
+
+export const metadata = {
+	title: "Security",
+};
 
 function page() {
 	return (
 		<>
 			<section className='flex flex-col gap-4'>
-				<div>
-					<h2 className='text-zinc-50 font-semibold text-5xl'>Account</h2>
-					<p className='text-zinc-50 font-medium text-base'>Account details</p>
-				</div>
+				<AccountTitle desc='Security options' title='Security' />
 				<SecurityContainer />
 			</section>
 		</>
