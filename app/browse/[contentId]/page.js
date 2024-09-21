@@ -8,7 +8,6 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogTitle from "@mui/material/DialogTitle";
 import Image from "next/image";
 import Link from "next/link";
-import * as React from "react";
 
 export default async function page({ params }) {
 	const session = await auth();
@@ -25,7 +24,7 @@ export default async function page({ params }) {
 	};
 
 	return (
-		<React.Fragment>
+		<>
 			<Dialog
 				fullWidth={true}
 				maxWidth='md'
@@ -78,6 +77,6 @@ export default async function page({ params }) {
 					</div>
 				</div>
 			</Dialog>
-		</React.Fragment>
+		</>
 	);
 }

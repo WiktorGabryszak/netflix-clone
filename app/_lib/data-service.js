@@ -195,7 +195,6 @@ export async function fetchShowsByGenre(genre, page, type) {
 	// const randomNumber = Math.floor(Math.random() * 8);
 	// console.log(randomNumber)
 
-
 	const options = {
 		method: "GET",
 		headers: {
@@ -270,6 +269,20 @@ export async function getMoviesFromMyList(userId) {
 	if (error) {
 		console.error(error);
 		throw new Error("Movies could not get loaded");
+	}
+
+	return data;
+}
+
+export async function getShowsFromMyList(userId) {
+	const { data, error } = await supabase
+		.from("my_shows")
+		.select("*")
+		.eq("user_id", userId);
+
+	if (error) {
+		console.error(error);
+		throw new Error("Shows could not get loaded");
 	}
 
 	return data;

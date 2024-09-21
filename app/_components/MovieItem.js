@@ -1,16 +1,17 @@
 "use client";
 
-import * as React from "react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import Image from "next/image";
-import { XMarkIcon } from "@heroicons/react/24/solid";
-import Dialog from "@mui/material/Dialog";
-import DialogActions from "@mui/material/DialogActions";
-import DialogTitle from "@mui/material/DialogTitle";
-import PlayButton from "./PlayButton";
+import ContentDialog from "./ContentDialog";
+import { useState } from "react";
 
-function MovieItem({ data, moviesOnList, movieGenres, showGenres }) {
-	const [open, setOpen] = React.useState(false);
+function MovieItem({
+	data,
+	moviesOnList,
+	showsOnList,
+	movieGenres,
+	showGenres,
+}) {
+	const [open, setOpen] = useState(false);
 
 	const pathname = usePathname();
 	const searchParams = useSearchParams();
@@ -18,6 +19,7 @@ function MovieItem({ data, moviesOnList, movieGenres, showGenres }) {
 
 	function handleClick() {
 		setOpen((open) => !open);
+
 		const params = new URLSearchParams(searchParams);
 		if (data.id) {
 			params.set("id", data.id);
@@ -30,7 +32,6 @@ function MovieItem({ data, moviesOnList, movieGenres, showGenres }) {
 		}
 		replace(`${pathname}?${params.toString()}`, { scroll: false });
 	}
-
 	let genres = [];
 
 	if (data.genres) {
@@ -43,17 +44,15 @@ function MovieItem({ data, moviesOnList, movieGenres, showGenres }) {
 
 	let matchedGenres = [];
 
-	if (data.title && pathname !== "/my-list") {
-		matchedGenres = movieGenres.filter((genre) =>
+	if (data.genre_ids && data.title) {
+		matchedGenres = movieGenres?.filter((genre) =>
 			data.genre_ids.includes(genre.id)
 		);
-	} else if (pathname !== "/my-list") {
-		matchedGenres = showGenres.filter((genre) =>
+	} else if (data.genre_ids && data.name) {
+		matchedGenres = showGenres?.filter((genre) =>
 			data.genre_ids.includes(genre.id)
 		);
 	}
-
-	moviesOnList;
 
 	return (
 		<>
@@ -71,67 +70,15 @@ function MovieItem({ data, moviesOnList, movieGenres, showGenres }) {
 				</p>
 			</button>
 			{open && (
-				<React.Fragment>
-					<Dialog
-						fullWidth={true}
-						maxWidth='md'
-						scroll='body'
-						open={open}
-						className='rounded-md z-[100000]'>
-						<div className='flex flex-col h-screen bg-zinc-900 rounded-md'>
-							<div className='h-[90vh]'>
-								<DialogActions className='absolute z-10 top-0 right-0'>
-									<button onClick={handleClick}>
-										<XMarkIcon className='w-10 h-10 text-white bg-zinc-900 rounded-full p-2 z-[10000]' />
-									</button>
-								</DialogActions>
-								<Image
-									src={`https://image.tmdb.org/t/p/original/${data.backdrop_path}`}
-									width={1000}
-									height={500}
-									alt='Content poster'
-									className='object-cover rounded-t-md relative h-[450px]'
-								/>
-								<div className='absolute w-full h-[450px] bg-gradient-to-b from-zinc-950/25 to-zinc-900/90 bg-opacity-30 top-0 left-0'></div>
-								<DialogTitle className='absolute top-[30%] left-5 text-zinc-100 text-5xl font-bold tracking-wider uppercase w-[75%] flex flex-col gap-8'>
-									{data?.title ? data.title : data?.name}
-									<div className='flex gap-4'>
-										<PlayButton data={data} />
-										{/* <AddToListButton
-											movieData={data}
-											isMovieAdded={isMovieAdded}
-										/> */}
-									</div>
-								</DialogTitle>
-							</div>
-							<div className='h-screen flex flex-col w-full px-12 bg-zinc-900 py-4 rounded-md text-zinc-100'>
-								<div className='flex justify-between py-4'>
-									<div className='flex flex-col w-[60%] gap-4'>
-										<p className='text-2xl'>
-											{data?.title ? data.title : data?.name}
-										</p>
-										<p>{data.overview}</p>
-									</div>
-									<div className='flex items-start w-[30%] overflow-hidden'>
-										<p className='text-sm text-zinc-500 font-normal flex gap-2'>
-											Genres:
-											<span className='flex gap-2 text-zinc-100 w-1/2 flex-wrap'>
-												{data.genres &&
-													genres?.map((genre, index) => (
-														<span key={index}>{genre},</span>
-													))}
-												{data.genre_ids &&
-													matchedGenres?.map((genre) => (
-														<span key={genre.id}>{genre.name},</span>
-													))}
-											</span>
-										</p>
-									</div>
-								</div>
-							</div>
-						</div>
-					</Dialog>
-				</React.Fragment>
+				<ContentDialog
+					onClick={handleClick}
+					data={data}
+					matchedGenres={matchedGenres}
+					open={open}
+					genres={genres}
+					moviesOnList={moviesOnList}
+					showsOnList={showsOnList}
+				/>
 			)}
 		</>
 	);
