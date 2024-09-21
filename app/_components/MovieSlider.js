@@ -4,7 +4,7 @@ import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/24/solid";
 import MovieItem from "./MovieItem";
 import { useRef, useState } from "react";
 
-export default function MovieSlider({ data }) {
+export default function MovieSlider({ data, movieGenres, showGenres }) {
 	const [showArrows, setShowArrows] = useState(false);
 
 	const sliderRef = useRef(null);
@@ -31,7 +31,12 @@ export default function MovieSlider({ data }) {
 			onMouseLeave={() => setShowArrows(false)}
 			ref={sliderRef}>
 			{data?.results?.map((movie) => (
-				<MovieItem key={movie.id} data={movie} />
+				<MovieItem
+					key={movie.id}
+					data={movie}
+					movieGenres={movieGenres}
+					showGenres={showGenres}
+				/>
 			))}
 			{showArrows && (
 				<>

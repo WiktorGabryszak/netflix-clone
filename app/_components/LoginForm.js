@@ -1,9 +1,8 @@
 "use client";
 
+import { useRouter } from "next/navigation";
 import { useCallback, useState } from "react";
 import LoginInput from "./LoginInput";
-import { signInAction, signUpAction } from "../_lib/actions";
-import { useRouter } from "next/navigation";
 import SignInGoogle from "./SignInGoogle";
 
 export default function LoginForm() {
@@ -25,19 +24,20 @@ export default function LoginForm() {
 				<h2 className='text-white text-4xl mb-8 font-semibold'>
 					{formType === "login" ? "Sign in" : "Create an Account"}
 				</h2>
+
 				<div className='flex flex-col gap-4'>
 					<LoginInput
-						id='email'
+						id='Email'
 						label='Email'
-						name='email'
+						name='Email'
 						type='text'
 						onChange={(e) => setEmail(e.target.value)}
 						value={email}
 					/>
 					<LoginInput
-						id='password'
+						id='Password'
 						label='Password'
-						name='password'
+						name='Password'
 						type='password'
 						onChange={(e) => setPassword(e.target.value)}
 						value={password}
@@ -45,7 +45,7 @@ export default function LoginForm() {
 					{formType !== "login" ? (
 						<LoginInput
 							id='repeatPassword'
-							label='Repeat Password'
+							label='Repeat The Password'
 							type='password'
 							name='repeatPassword'
 							onChange={(e) => setRepeatPassword(e.target.value)}
@@ -59,6 +59,7 @@ export default function LoginForm() {
 					</button>
 					<SignInGoogle />
 				</div>
+
 				<p className='text-neutral-500 mt-12'>
 					{formType === "login"
 						? "First time using Netflix?"

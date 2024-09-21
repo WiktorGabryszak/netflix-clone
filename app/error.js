@@ -10,7 +10,7 @@ export default function Error({ error, reset }) {
 				<p className='text-lg truncate text-wrap w-1/2 text-center'>{error.message}</p>
 
 				<button
-					className='inline-block px-6 py-3 text-lg bg-accent-500 text-primary-800 bg-zinc-50 text-zinc-900 w-[15%] self-center'
+					className='px-6 py-3 text-lg bg-accent-500 text-primary-800 bg-zinc-50 text-zinc-900 w-1/2'
 					onClick={reset}>
 					Try again
 				</button>
