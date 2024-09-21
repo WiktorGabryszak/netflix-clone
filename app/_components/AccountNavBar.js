@@ -1,12 +1,8 @@
 "use client";
-import {
-	HomeIcon,
-	ShieldCheckIcon,
-	UserGroupIcon,
-} from "@heroicons/react/24/outline";
 
-import Link from "next/link";
 import { usePathname } from "next/navigation";
+import Link from "next/link";
+import { HomeIcon, ShieldCheckIcon, UserGroupIcon } from "@heroicons/react/24/outline";
 
 const navLinks = [
 	{
@@ -24,9 +20,7 @@ const navLinks = [
 		name: "Security",
 		href: "/account/security",
 		icon: <ShieldCheckIcon className='w-6 h-6 ' />,
-		activeIcon: (
-			<ShieldCheckIcon className='w-6 h-6 text-zinc-900' fill='white' />
-		),
+		activeIcon: <ShieldCheckIcon className='w-6 h-6 text-zinc-900' fill='white' />,
 	},
 	{
 		name: "Profiles",
@@ -36,7 +30,7 @@ const navLinks = [
 	},
 ];
 
-function AccountNavBar() {
+export default function AccountNavBar() {
 	const pathname = usePathname();
 
 	return (
@@ -58,5 +52,3 @@ function AccountNavBar() {
 		</nav>
 	);
 }
-
-export default AccountNavBar;

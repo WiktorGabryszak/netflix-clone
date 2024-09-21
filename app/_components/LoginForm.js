@@ -1,7 +1,7 @@
 "use client";
 
-import { useRouter } from "next/navigation";
 import { useCallback, useState } from "react";
+import { useRouter } from "next/navigation";
 import LoginInput from "./LoginInput";
 import SignInGoogle from "./SignInGoogle";
 
@@ -9,10 +9,7 @@ export default function LoginForm() {
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
 	const [repeatPassword, setRepeatPassword] = useState("");
-
 	const [formType, setFormType] = useState("login");
-
-	const router = useRouter();
 
 	const toggleFormType = useCallback(() => {
 		setFormType((current) => (current === "login" ? "register" : "login"));
@@ -21,9 +18,7 @@ export default function LoginForm() {
 	return (
 		<div className='flex justify-center'>
 			<div className='bg-black bg-opacity-70 px-16 py-16 self-center mt-2 lg:w-2/5 lg:max-w-md rounded-md w-full'>
-				<h2 className='text-white text-4xl mb-8 font-semibold'>
-					{formType === "login" ? "Sign in" : "Create an Account"}
-				</h2>
+				<h2 className='text-white text-4xl mb-8 font-semibold'>{formType === "login" ? "Sign in" : "Create an Account"}</h2>
 
 				<div className='flex flex-col gap-4'>
 					<LoginInput
@@ -61,12 +56,8 @@ export default function LoginForm() {
 				</div>
 
 				<p className='text-neutral-500 mt-12'>
-					{formType === "login"
-						? "First time using Netflix?"
-						: "Already have an account"}
-					<span
-						className='text-white ml-1 hover:underline cursor-pointer'
-						onClick={toggleFormType}>
+					{formType === "login" ? "First time using Netflix?" : "Already have an account"}
+					<span className='text-white ml-1 hover:underline cursor-pointer' onClick={toggleFormType}>
 						{formType === "login" ? "Create new Account" : "Login"}
 					</span>
 				</p>

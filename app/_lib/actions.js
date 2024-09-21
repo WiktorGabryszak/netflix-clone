@@ -89,10 +89,7 @@ export async function deleteMovieFromList(movie_id) {
 	if (!userMoviesIds.includes(movie_id))
 		throw new Error("You are not allowed to delete this movie");
 
-	const { error } = await supabase
-		.from("my_movies")
-		.delete()
-		.eq("movie_id", movie_id);
+	const { error } = await supabase.from("my_movies").delete().eq("movie_id", movie_id);
 
 	if (error) {
 		console.error(error);
@@ -110,13 +107,9 @@ export async function deleteShowFromList(show_id) {
 
 	console.log(!userShowsIds.includes(show_id));
 
-	if (!userShowsIds.includes(show_id))
-		throw new Error("You are not allowed to delete this show");
+	if (!userShowsIds.includes(show_id)) throw new Error("You are not allowed to delete this show");
 
-	const { error } = await supabase
-		.from("my_shows")
-		.delete()
-		.eq("show_id", show_id);
+	const { error } = await supabase.from("my_shows").delete().eq("show_id", show_id);
 
 	if (error) {
 		console.error(error);

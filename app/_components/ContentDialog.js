@@ -1,20 +1,13 @@
-import { Dialog, DialogActions, DialogTitle } from "@mui/material";
-import PlayButton from "./PlayButton";
-import Image from "next/image";
 import { XMarkIcon } from "@heroicons/react/24/solid";
-import AddToListButton from "./AddToListButton";
+import { Dialog, DialogActions, DialogTitle } from "@mui/material";
+
+import Image from "next/image";
 import { usePathname } from "next/navigation";
 
-function ContentDialog({
-	open,
-	onClick,
-	data,
-	matchedGenres,
-	genres,
-	moviesOnList,
-	showsOnList,
-	setOpen,
-}) {
+import AddToListButton from "./AddToListButton";
+import PlayButton from "./PlayButton";
+
+export default function ContentDialog({ open, onClick, data, matchedGenres, genres, moviesOnList, showsOnList }) {
 	const pathname = usePathname();
 
 	let isMovieAdded;
@@ -30,12 +23,7 @@ function ContentDialog({
 
 	return (
 		<>
-			<Dialog
-				fullWidth={true}
-				maxWidth='md'
-				scroll='body'
-				open={open}
-				className='rounded-md z-[100000]'>
+			<Dialog fullWidth={true} maxWidth='md' scroll='body' open={open} className='rounded-md z-[100000]'>
 				<div className='flex flex-col h-screen bg-zinc-900 rounded-md'>
 					<div className='h-[90vh]'>
 						<DialogActions className='absolute z-10 top-0 right-0'>
@@ -68,9 +56,7 @@ function ContentDialog({
 					<div className='h-screen flex flex-col w-full px-12 bg-zinc-900 py-4 rounded-md text-zinc-100'>
 						<div className='flex justify-between py-4'>
 							<div className='flex flex-col w-[60%] gap-4'>
-								<p className='text-2xl'>
-									{data?.title ? data.title : data?.name}
-								</p>
+								<p className='text-2xl'>{data?.title ? data.title : data?.name}</p>
 								<p>{data.overview}</p>
 							</div>
 							<div className='flex items-start w-[30%] overflow-hidden'>
@@ -79,15 +65,11 @@ function ContentDialog({
 									<span className='flex gap-2 text-zinc-100 w-1/2 flex-wrap'>
 										{(data.title || data.name) &&
 											genres.length > 0 &&
-											genres.map((genre, index) => (
-												<span key={index}>{genre.name || genre},</span>
-											))}
+											genres.map((genre, index) => <span key={index}>{genre.name || genre},</span>)}
 
 										{data.genre_ids &&
 											matchedGenres.length > 0 &&
-											matchedGenres.map((genre) => (
-												<span key={genre.id}>{genre.name},</span>
-											))}
+											matchedGenres.map((genre) => <span key={genre.id}>{genre.name},</span>)}
 									</span>
 								</p>
 							</div>
@@ -98,5 +80,3 @@ function ContentDialog({
 		</>
 	);
 }
-
-export default ContentDialog;

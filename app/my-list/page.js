@@ -2,12 +2,7 @@ import Footer from "../_components/Footer";
 import Header from "../_components/Header";
 import MovieItem from "../_components/MovieItem";
 import { auth } from "../_lib/auth";
-import {
-	fetchMoviesGenres,
-	fetchShowsGenres,
-	getMoviesFromMyList,
-	getShowsFromMyList,
-} from "../_lib/data-service";
+import { fetchMoviesGenres, fetchShowsGenres, getMoviesFromMyList, getShowsFromMyList } from "../_lib/data-service";
 
 export const metadata = {
 	title: "My List",

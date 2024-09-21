@@ -1,12 +1,7 @@
-import {
-	ChevronRightIcon,
-	DevicePhoneMobileIcon,
-	EnvelopeIcon,
-	LockClosedIcon,
-} from "@heroicons/react/24/outline";
+import { ChevronRightIcon, DevicePhoneMobileIcon, EnvelopeIcon, LockClosedIcon } from "@heroicons/react/24/outline";
 import Link from "next/link";
 
-function SecurityContainer() {
+export default function SecurityContainer() {
 	return (
 		<div className='border border-zinc-500 rounded-md px-2 py-2'>
 			<Link
@@ -41,5 +36,3 @@ function SecurityContainer() {
 		</div>
 	);
 }
-
-export default SecurityContainer;

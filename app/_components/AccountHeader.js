@@ -3,9 +3,9 @@ import Link from "next/link";
 import netflixIcon from "@/public/netflix.png";
 import profileIcon from "@/public/profile1.png";
 
-function AccountHeader() {
+export default function AccountHeader() {
 	return (
-		<header className="bg-zinc-950">
+		<header className='bg-zinc-950'>
 			<div className='h-[68px] flex items-center justify-between w-[1200px] mx-auto'>
 				<Link href='/browse' className='relative aspect-square'>
 					<Image src={netflixIcon} width={94} alt='Netflix Icon' />
@@ -15,5 +15,3 @@ function AccountHeader() {
 		</header>
 	);
 }
-
-export default AccountHeader;

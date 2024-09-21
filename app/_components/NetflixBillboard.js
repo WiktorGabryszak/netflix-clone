@@ -1,14 +1,16 @@
 "use client";
 
-import { InformationCircleIcon } from "@heroicons/react/24/solid";
+import { usePathname } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
+
+import { InformationCircleIcon } from "@heroicons/react/24/solid";
 import PlayButton from "./PlayButton";
-import { usePathname } from "next/navigation";
 
 export default function NetflixBillboard({ data }) {
 	const pathname = usePathname();
 	if (pathname.includes("movies") || pathname.includes("tv-shows") || pathname.includes("original-audio")) return null;
+
 	return (
 		<>
 			<Image
@@ -19,9 +21,7 @@ export default function NetflixBillboard({ data }) {
 			/>
 			<div className='relative h-[80vh] z-50'>
 				<div className='absolute top-[30%] md:top-[40%] ml-4 md:ml-16 '>
-					<p className='text-white text-1xl md:text-5xl h-full w-[50%] lg:text-6xl font-bold drop-shadow-xl'>
-						{data.title}
-					</p>
+					<p className='text-white text-1xl md:text-5xl h-full w-[50%] lg:text-6xl font-bold drop-shadow-xl'>{data.title}</p>
 					<p className='text-white text-[8px] md:text-lg mt-3 md:mt-8 w-[90%] md:w-[80%] lg:w-[50%] drop-shadow-xl'>
 						{data.overview}
 					</p>

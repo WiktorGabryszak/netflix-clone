@@ -5,11 +5,7 @@ import { supabase } from "./supabase";
 ////////////
 
 export async function getUser(email) {
-	const { data } = await supabase
-		.from("users")
-		.select("*")
-		.eq("email", email)
-		.single();
+	const { data } = await supabase.from("users").select("*").eq("email", email).single();
 
 	// No error here! We handle the possibility of no guest in the sign in callback
 	return data;
@@ -71,10 +67,7 @@ export async function fetchMovies(type, page) {
 		},
 	};
 
-	const res = await fetch(
-		`https://api.themoviedb.org/3/movie/${type}?page=${page}`,
-		options
-	);
+	const res = await fetch(`https://api.themoviedb.org/3/movie/${type}?page=${page}`, options);
 	const data = await res.json();
 	if (data.Response === "False") throw new Error("Movies not found");
 
@@ -90,10 +83,7 @@ export async function fetchShows(type, page) {
 		},
 	};
 
-	const res = await fetch(
-		`https://api.themoviedb.org/3/tv/${type}?page=${page}`,
-		options
-	);
+	const res = await fetch(`https://api.themoviedb.org/3/tv/${type}?page=${page}`, options);
 	const data = await res.json();
 	if (data.Response === "False") throw new Error("Shows not found");
 
@@ -125,10 +115,7 @@ export async function fetchMoviesGenres() {
 		},
 	};
 
-	const res = await fetch(
-		`https://api.themoviedb.org/3/genre/movie/list`,
-		options
-	);
+	const res = await fetch(`https://api.themoviedb.org/3/genre/movie/list`, options);
 	const data = await res.json();
 	if (data.Response === "False") throw new Error("Movie genres not found");
 
@@ -144,10 +131,7 @@ export async function fetchShowsGenres() {
 		},
 	};
 
-	const res = await fetch(
-		`https://api.themoviedb.org/3/genre/tv/list`,
-		options
-	);
+	const res = await fetch(`https://api.themoviedb.org/3/genre/tv/list`, options);
 	const data = await res.json();
 	if (data.Response === "False") throw new Error("Movie genres not found");
 
@@ -163,10 +147,7 @@ export async function fetchMovieByQuery(query) {
 		},
 	};
 
-	const res = await fetch(
-		`https://api.themoviedb.org/3/search/movie?query=${query}`,
-		options
-	);
+	const res = await fetch(`https://api.themoviedb.org/3/search/movie?query=${query}`, options);
 	const data = await res.json();
 	if (data.Response === "False") throw new Error("Movie not found");
 
@@ -181,10 +162,7 @@ export async function fetchShowByQuery(query) {
 		},
 	};
 
-	const res = await fetch(
-		`https://api.themoviedb.org/3/search/tv?query=${query}`,
-		options
-	);
+	const res = await fetch(`https://api.themoviedb.org/3/search/tv?query=${query}`, options);
 	const data = await res.json();
 	if (data.Response === "False") throw new Error("Shows not found");
 
@@ -192,9 +170,6 @@ export async function fetchShowByQuery(query) {
 }
 
 export async function fetchShowsByGenre(genre, page, type) {
-	// const randomNumber = Math.floor(Math.random() * 8);
-	// console.log(randomNumber)
-
 	const options = {
 		method: "GET",
 		headers: {
@@ -240,11 +215,7 @@ export async function fetchMoviesByGenre(genre, page, type) {
 ///////////////////////
 
 export async function getMovieFromList(movie_id) {
-	const { data } = await supabase
-		.from("my_movies")
-		.select("*")
-		.eq("movie_id", movie_id)
-		.single();
+	const { data } = await supabase.from("my_movies").select("*").eq("movie_id", movie_id).single();
 
 	return data;
 }
@@ -261,10 +232,7 @@ export async function getMoviesFromList() {
 }
 
 export async function getMoviesFromMyList(userId) {
-	const { data, error } = await supabase
-		.from("my_movies")
-		.select("*")
-		.eq("user_id", userId);
+	const { data, error } = await supabase.from("my_movies").select("*").eq("user_id", userId);
 
 	if (error) {
 		console.error(error);
@@ -275,10 +243,7 @@ export async function getMoviesFromMyList(userId) {
 }
 
 export async function getShowsFromMyList(userId) {
-	const { data, error } = await supabase
-		.from("my_shows")
-		.select("*")
-		.eq("user_id", userId);
+	const { data, error } = await supabase.from("my_shows").select("*").eq("user_id", userId);
 
 	if (error) {
 		console.error(error);

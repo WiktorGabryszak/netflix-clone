@@ -1,13 +1,15 @@
 "use client";
+
+import { useEffect, useState } from "react";
+import { usePathname } from "next/navigation";
 import Link from "next/link";
+import Image from "next/image";
+
 import Navigation from "./Navigation";
 import ProfileButtons from "./ProfileButton";
-import Image from "next/image";
 import netflixIcon from "@/public/netflix.png";
-import { usePathname } from "next/navigation";
-import { useEffect, useState } from "react";
 
-function HeaderContent({ children }) {
+export default function HeaderContent({ children }) {
 	const [isScrolled, setIsScrolled] = useState(false);
 	const pathname = usePathname();
 
@@ -27,10 +29,7 @@ function HeaderContent({ children }) {
 	}, [isScrolled]);
 
 	return (
-		<header
-			className={`flex flex-col sticky top-0 z-[100] pb-2 ${
-				isScrolled ? "bg-neutral-950/95" : "bg-opacity-0"
-			} `}>
+		<header className={`flex flex-col sticky top-0 z-[100] pb-2 ${isScrolled ? "bg-neutral-950/95" : "bg-opacity-0"} `}>
 			<div className={`px-14  h-[68px] flex items-center justify-between`}>
 				<section className='flex gap-10'>
 					<Link href='/browse' className='relative aspect-square'>
@@ -45,5 +44,3 @@ function HeaderContent({ children }) {
 		</header>
 	);
 }
-
-export default HeaderContent;

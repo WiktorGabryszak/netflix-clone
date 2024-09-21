@@ -1,16 +1,10 @@
 "use client";
 
+import { useState } from "react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import ContentDialog from "./ContentDialog";
-import { useState } from "react";
 
-function MovieItem({
-	data,
-	moviesOnList,
-	showsOnList,
-	movieGenres,
-	showGenres,
-}) {
+export default function MovieItem({ data, moviesOnList, showsOnList, movieGenres, showGenres }) {
 	const [open, setOpen] = useState(false);
 
 	const pathname = usePathname();
@@ -45,20 +39,14 @@ function MovieItem({
 	let matchedGenres = [];
 
 	if (data.genre_ids && data.title) {
-		matchedGenres = movieGenres?.filter((genre) =>
-			data.genre_ids.includes(genre.id)
-		);
+		matchedGenres = movieGenres?.filter((genre) => data.genre_ids.includes(genre.id));
 	} else if (data.genre_ids && data.name) {
-		matchedGenres = showGenres?.filter((genre) =>
-			data.genre_ids.includes(genre.id)
-		);
+		matchedGenres = showGenres?.filter((genre) => data.genre_ids.includes(genre.id));
 	}
 
 	return (
 		<>
-			<button
-				className='group bg-zinc-900 relative min-w-[290px] rounded-md'
-				onClick={handleClick}>
+			<button className='group bg-zinc-900 relative min-w-[290px] rounded-md' onClick={handleClick}>
 				<img
 					src={`https://image.tmdb.org/t/p/w500/${data.backdrop_path}`}
 					alt='Movie Poster'
@@ -83,5 +71,3 @@ function MovieItem({
 		</>
 	);
 }
-
-export default MovieItem;

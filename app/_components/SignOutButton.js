@@ -1,7 +1,7 @@
 import { ArrowRightOnRectangleIcon } from "@heroicons/react/24/solid";
 import { signOutAction } from "../_lib/actions";
 
-function SignOutButton() {
+export default function SignOutButton() {
 	return (
 		<form action={signOutAction}>
 			<button
@@ -12,5 +12,3 @@ function SignOutButton() {
 		</form>
 	);
 }
-
-export default SignOutButton;

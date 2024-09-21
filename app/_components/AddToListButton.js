@@ -1,25 +1,14 @@
 "use client";
 
+import { addMovieToList, addShowToList, deleteMovieFromList, deleteShowFromList } from "../_lib/actions";
 import { CheckIcon, PlusIcon } from "@heroicons/react/24/solid";
-import {
-	addMovieToList,
-	addShowToList,
-	deleteMovieFromList,
-	deleteShowFromList,
-} from "../_lib/actions";
 import { usePathname } from "next/navigation";
 
-function AddToListButton({
-	data,
-	isMovieAdded,
-	matchedGenres,
-	genres,
-	isShowAdded,
-}) {
+export default function AddToListButton({ data, isMovieAdded, matchedGenres, genres, isShowAdded }) {
+	
 	const pathname = usePathname();
 	function handleAdd(e) {
 		e.preventDefault();
-		console.log("Add to List button clicked");
 		if (data.title) {
 			if (isMovieAdded) {
 				if (pathname.includes("my-list")) {
@@ -49,23 +38,11 @@ function AddToListButton({
 			onClick={(e) => handleAdd(e)}>
 			{data?.title ? (
 				<>
-					{isMovieAdded ? (
-						<CheckIcon className='w-6 h-6 text-zinc-100' />
-					) : (
-						<PlusIcon className='w-6 h-6 text-zinc-100' />
-					)}
+					{isMovieAdded ? <CheckIcon className='w-6 h-6 text-zinc-100' /> : <PlusIcon className='w-6 h-6 text-zinc-100' />}
 				</>
 			) : (
-				<>
-					{isShowAdded ? (
-						<CheckIcon className='w-6 h-6 text-zinc-100' />
-					) : (
-						<PlusIcon className='w-6 h-6 text-zinc-100' />
-					)}
-				</>
+				<>{isShowAdded ? <CheckIcon className='w-6 h-6 text-zinc-100' /> : <PlusIcon className='w-6 h-6 text-zinc-100' />}</>
 			)}
 		</button>
 	);
 }
-
-export default AddToListButton;

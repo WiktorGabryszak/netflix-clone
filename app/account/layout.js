@@ -1,7 +1,7 @@
 import Link from "next/link";
+import { ArrowLeftIcon } from "@heroicons/react/24/solid";
 import AccountHeader from "../_components/AccountHeader";
 import AccountNavBar from "../_components/AccountNavBar";
-import { ArrowLeftIcon } from "@heroicons/react/24/solid";
 import SignOutButton from "../_components/SignOutButton";
 
 export default function Layout({ children }) {

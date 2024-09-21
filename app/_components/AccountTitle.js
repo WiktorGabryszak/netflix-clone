@@ -1,4 +1,4 @@
-function AccountTitle({ title, desc }) {
+export default function AccountTitle({ title, desc }) {
 	return (
 		<div>
 			<h2 className='text-zinc-50 font-semibold text-5xl'>{title}</h2>
@@ -7,4 +7,3 @@ function AccountTitle({ title, desc }) {
 	);
 }
 
-export default AccountTitle;

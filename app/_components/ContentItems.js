@@ -1,7 +1,8 @@
 import { fetchMovies } from "../_lib/data-service";
 import MovieList from "./MovieList";
 
-async function ContentItems() {
+export default async function ContentItems() {
+	
 	const popularMovies = await fetchMovies("popular", 2);
 	const topRatedMovies = await fetchMovies("top_rated", 1);
 	const upcomingMovies = await fetchMovies("upcoming", 3);
@@ -14,5 +15,3 @@ async function ContentItems() {
 		</div>
 	);
 }
-
-export default ContentItems;

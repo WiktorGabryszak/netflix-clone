@@ -1,4 +1,4 @@
-function LoginInput({ id, onChange, value, label, type, name }) {
+export default function LoginInput({ id, onChange, value, label, type, name }) {
 	return (
 		<div className='relative'>
 			<input
@@ -18,5 +18,3 @@ function LoginInput({ id, onChange, value, label, type, name }) {
 		</div>
 	);
 }
-
-export default LoginInput;

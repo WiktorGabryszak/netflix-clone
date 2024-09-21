@@ -43,8 +43,7 @@ const authConfig = {
 			try {
 				const exsitingGuest = await getUser(user.email);
 
-				if (!exsitingGuest)
-					await createUser({ email: user.email, fullName: user.name });
+				if (!exsitingGuest) await createUser({ email: user.email, fullName: user.name });
 
 				return true;
 			} catch {

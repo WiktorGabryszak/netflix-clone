@@ -1,7 +1,7 @@
 import AccountTitle from "@/app/_components/AccountTitle";
 
 export const metadata = {
-	title: "Profiles",
+	title: "Phone Number",
 };
 
 function page() {

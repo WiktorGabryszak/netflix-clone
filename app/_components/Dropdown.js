@@ -1,10 +1,10 @@
 "use client";
 
-import { ChevronDownIcon } from "@heroicons/react/24/solid";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { ChevronDownIcon } from "@heroicons/react/24/solid";
 
-function Dropdown({ movieGenres, showGenres }) {
+export default function Dropdown({ movieGenres, showGenres }) {
 	const [isOpen, setIsOpen] = useState(false);
 	const [selectedGenreId, setSelectedGenreId] = useState();
 	const [selectedGenreName, setSelectedGenreName] = useState("");
@@ -26,7 +26,6 @@ function Dropdown({ movieGenres, showGenres }) {
 			params.set("genre", selectedGenreId);
 			replace(`/browse/${nameOfPath}?${params.toString()}`);
 		}
-		// Usuwanie parametru, gdy gatunek nie jest wybrany
 		if (!selectedGenreId) {
 			const params = new URLSearchParams(searchParams);
 			params.delete("genre");
@@ -90,5 +89,3 @@ function Dropdown({ movieGenres, showGenres }) {
 		</div>
 	);
 }
-
-export default Dropdown;

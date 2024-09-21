@@ -1,20 +1,12 @@
 "use client";
 
+import { useRef, useState } from "react";
 import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/24/solid";
 import MovieItem from "./MovieItem";
-import { useRef, useState } from "react";
 
-export default function MovieSlider({
-	data,
-	movieGenres,
-	showGenres,
-	moviesOnList,
-	showsOnList
-}) {
+export default function MovieSlider({ data, movieGenres, showGenres, moviesOnList, showsOnList }) {
 	const [showArrows, setShowArrows] = useState(false);
-
 	const sliderRef = useRef(null);
-
 	const scrollLeft = () => {
 		if (sliderRef.current) {
 			sliderRef.current.scrollBy({
@@ -53,11 +45,8 @@ export default function MovieSlider({
 						onClick={scrollLeft}>
 						<ChevronLeftIcon className='w-8 h-8' />
 					</button>
-
 					<button
-						className='absolute md:right-0 flex items-center justify-center
-             h-[165px] w-[65px] bg-black bg-opacity-50 hover:bg-opacity-75 text-white z-10
-            '
+						className='absolute md:right-0 flex items-center justify-center h-[165px] w-[65px] bg-black bg-opacity-50 hover:bg-opacity-75 text-white z-10'
 						onClick={scrollRight}>
 						<ChevronRightIcon className='w-8 h-8' />
 					</button>

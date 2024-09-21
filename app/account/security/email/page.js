@@ -1,5 +1,9 @@
 import AccountTitle from "@/app/_components/AccountTitle";
 
+export const metadata = {
+	title: "Email",
+};
+
 function page() {
 	return (
 		<div>
