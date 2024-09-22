@@ -58,9 +58,9 @@ export default function ProfileButtons() {
 				)}
 			</div>
 
-			<button>
+			{/* <button>
 				<BellIcon className='w-6 h-6 text-neutral-50' />
-			</button>
+			</button> */}
 			<div className='flex items-center gap-1 hover:cursor-pointer' onMouseEnter={() => setIsHoverProfile(true)}>
 				<Image src={profile1} width={32} height={32} className='rounded-md' alt='Profile Image of User' />
 				<button className='relative'>

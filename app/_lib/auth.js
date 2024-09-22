@@ -1,6 +1,6 @@
 import NextAuth from "next-auth";
 import Google from "next-auth/providers/google";
-import { createUser, getUser } from "./data-service";
+import { addProfile, createUser, getProfilesByUserId, getUser } from "./data-service";
 import { supabase } from "./supabase";
 
 const authConfig = {
@@ -43,7 +43,6 @@ const authConfig = {
 	secret: process.env.NEXTAUTH_SECRET,
 	callbacks: {
 		authorized({ auth, request }) {
-			console.log(auth);
 			return !!auth?.user;
 		},
 		async signIn({ user, account, profile }) {
@@ -51,6 +50,18 @@ const authConfig = {
 				const exsitingUser = await getUser(user.email);
 
 				if (!exsitingUser) await createUser({ email: user.email, fullName: user.name });
+
+				const data = await getProfilesByUserId(exsitingUser?.id);
+				const [firstName, lastName] = exsitingUser?.fullName.split(" ");
+
+				if (data.length === 0) {
+					const newProfileData = {
+						user_id: exsitingUser?.id,
+						profile_1_name: firstName,
+						profile_1_photo: "",
+					};
+					await addProfile(newProfileData);
+				}
 
 				return true;
 			} catch {
@@ -61,6 +72,7 @@ const authConfig = {
 			const userData = await getUser(session.user.email);
 
 			session.user.userId = userData.id;
+
 			return session;
 		},
 	},

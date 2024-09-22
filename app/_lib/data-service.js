@@ -256,3 +256,26 @@ export async function getShowsFromMyList(userId) {
 
 	return data;
 }
+
+//////////////////////
+// Profiles
+//////////////////////
+
+export async function getProfilesByUserId(id) {
+	const { data, error } = await supabase.from("profiles").select("*").eq("user_id", id);
+
+	if (error) throw new Error("There was some issue dowloading your profiles");
+
+	return data;
+}
+
+export async function addProfile(newProfile) {
+	const { data, error } = await supabase.from("profiles").insert([newProfile]);
+
+	if (error) {
+		console.error(error);
+		throw new Error("Profile could not be added");
+	}
+
+	return data;
+}
