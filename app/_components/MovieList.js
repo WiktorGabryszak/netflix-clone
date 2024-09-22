@@ -11,7 +11,7 @@ export default async function MovieList({ title, data }) {
 	const showsOnList = await getShowsFromMyList(session.user.userId);
 
 	return (
-		<div className='px-4 md:pl-14 space-y-2 h-[30vh]'>
+		<div className='pl-4 md:pl-14 space-y-2 h-[30vh]'>
 			<p className='text-zinc-100 text-base md:text-xl lg:text-2xl font-medium tracking-wide'>{title}</p>
 			<MovieSlider
 				data={data}

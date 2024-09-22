@@ -4,10 +4,40 @@ import { redirect } from "next/navigation";
 import { auth, signIn, signOut } from "./auth";
 import { supabase } from "./supabase";
 import { revalidatePath } from "next/cache";
-import { getMoviesFromMyList, getShowsFromMyList } from "./data-service";
+import { createUser, getMoviesFromMyList, getShowsFromMyList, getUser, login, signUp } from "./data-service";
+
+export async function logIn(email, password) {
+	if (!email || !password) return;
+
+	const { data: users, error } = await supabase.from("users").select("*").eq("email", email).eq("password", password);
+
+	if (error) {
+		console.error("Login error:", error.message);
+		return;
+	}
+
+	await signIn("credentials", { redirectTo: "/" });
+
+	redirect("/");
+
+	// const { data, error } = await supabase.auth.signInWithPassword({
+	// 	email,
+	// 	password,
+	// });
+}
 
 export async function signInWithGoogleAction() {
 	await signIn("google", { redirectTo: "/" });
+}
+
+export async function singUp(email, password) {
+	if (!email || !password) return;
+
+	const exsitingUser = await getUser(email);
+
+	if (!exsitingUser) await createUser({ email: email, password: password, fullName: "" });
+
+	redirect("/");
 }
 
 export async function signUpAction(formData) {
@@ -86,8 +116,7 @@ export async function deleteMovieFromList(movie_id) {
 
 	console.log(userMovies);
 
-	if (!userMoviesIds.includes(movie_id))
-		throw new Error("You are not allowed to delete this movie");
+	if (!userMoviesIds.includes(movie_id)) throw new Error("You are not allowed to delete this movie");
 
 	const { error } = await supabase.from("my_movies").delete().eq("movie_id", movie_id);
 

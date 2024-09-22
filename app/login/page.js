@@ -1,8 +1,6 @@
 import logo from "@/public/netflix.png";
 import Image from "next/image";
 import LoginForm from "../_components/LoginForm";
-import { auth } from "../_lib/auth";
-import { supabase } from "../_lib/supabase";
 
 export const metadata = {
 	title: "Login",

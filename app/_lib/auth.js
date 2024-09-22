@@ -1,7 +1,7 @@
 import NextAuth from "next-auth";
 import Google from "next-auth/providers/google";
-import Credentials from "next-auth/providers/credentials";
 import { createUser, getUser } from "./data-service";
+import { supabase } from "./supabase";
 
 const authConfig = {
 	providers: [
@@ -9,41 +9,48 @@ const authConfig = {
 			clientId: process.env.AUTH_GOOGLE_ID,
 			clientSecret: process.env.AUTH_GOOGLE_SECRET,
 		}),
-		Credentials({
-			credentials: {
-				email: { label: "Email" },
-				password: { label: "Password", type: "password" },
-				repeatPassword: { label: "repeatPassword", type: "password" },
-			},
-			async authorize(credentials) {
-				if (credentials.password !== credentials.repeatPassword) {
-					throw new Error("Passwords do not match");
-				}
+		// Credentials({
+		// 	CredentialsSignin: {
+		// 		email: { label: "Email" },
+		// 		password: { label: "Password", type: "password" },
+		// 	},
+		// 	async authorize(credentials) {
+		// 		// const { data, error } = await supabase.auth.signInWithPassword({
+		// 		// 	email: credentials.email,
+		// 		// 	password: credentials.password,
+		// 		// });
 
-				const { data, error } = await supabase.auth.signInWithPassword({
-					email: credentials.email,
-					password: credentials.password,
-				});
+		// 		// if (error) {
+		// 		// 	console.error(error.message);
+		// 		// 	return null;
+		// 		// }
 
-				if (error) {
-					console.error(error.message);
-					return null;
-				}
+		// 		const { data: users, error } = await supabase
+		// 			.from("users")
+		// 			.select("*")
+		// 			.eq("email", credentials.email)
+		// 			.eq("password", credentials.password);
 
-				return data.user ?? null;
-			},
-		}),
+		// 		if (error) {
+		// 			console.error("Login error:", error.message);
+		// 			return;
+		// 		}
+
+		// 		return users ?? null;
+		// 	},
+		// }),
 	],
 	secret: process.env.NEXTAUTH_SECRET,
 	callbacks: {
 		authorized({ auth, request }) {
+			console.log(auth);
 			return !!auth?.user;
 		},
 		async signIn({ user, account, profile }) {
 			try {
-				const exsitingGuest = await getUser(user.email);
+				const exsitingUser = await getUser(user.email);
 
-				if (!exsitingGuest) await createUser({ email: user.email, fullName: user.name });
+				if (!exsitingUser) await createUser({ email: user.email, fullName: user.name });
 
 				return true;
 			} catch {

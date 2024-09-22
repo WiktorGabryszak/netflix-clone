@@ -1,5 +1,7 @@
 import Link from "next/link";
 import { auth } from "../_lib/auth";
+import { supabase } from "../_lib/supabase";
+import { checkUserSession, getCurrentUser } from "../_lib/data-service";
 
 export default async function ProfileComponent() {
 	const user = await auth();

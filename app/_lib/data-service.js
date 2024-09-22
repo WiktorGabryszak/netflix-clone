@@ -1,3 +1,4 @@
+import { flushAllTraces } from "next/dist/trace";
 import { supabase } from "./supabase";
 
 /////////////
@@ -7,25 +8,32 @@ import { supabase } from "./supabase";
 export async function getUser(email) {
 	const { data } = await supabase.from("users").select("*").eq("email", email).single();
 
-	// No error here! We handle the possibility of no guest in the sign in callback
 	return data;
 }
 
 ////////////////////////
-//  USER MANAGEMENT
+//  USER MANAGEMENT (SUPABASE)
 ///////////////////////
 
 export async function signUp({ email, password }) {
-	const { data, error } = await supabase.auth.signUp({
-		email: email,
-		password: password,
-	});
+	// const { data, error } = await supabase.auth.signUp({
+	// 	email,
+	// 	password,
+	// 	options: {
+	// 		data: {
+	// 			fullName: fullName,
+	// 			avatar: "",
+	// 		},
+	// 	},
+	// });
 
-	if (error) {
-		throw new Error("User could not be created");
-	}
+	// if (error) {
+	// 	throw new Error("User could not be created");
+	// }
 
-	return data;
+	// return data;
+
+	await createUser({ email: email, password: password, fullName: "" });
 }
 
 export async function login({ email, password }) {
@@ -37,6 +45,21 @@ export async function login({ email, password }) {
 	if (error) throw new Error(error.message);
 
 	return data;
+}
+
+export async function getCurrentUser() {
+	const { data: session } = await supabase.auth.getSession();
+	if (!session.session) return null;
+
+	const { data, error } = await supabase.auth.getUser();
+
+	if (error) throw new Error(error.message);
+	return data?.user;
+}
+
+export async function logout() {
+	const { error } = await supabase.auth.signOut();
+	if (error) throw new Error(error.message);
 }
 
 /////////////////
@@ -153,6 +176,7 @@ export async function fetchMovieByQuery(query) {
 
 	return data;
 }
+
 export async function fetchShowByQuery(query) {
 	const options = {
 		method: "GET",
@@ -189,9 +213,6 @@ export async function fetchShowsByGenre(genre, page, type) {
 }
 
 export async function fetchMoviesByGenre(genre, page, type) {
-	// const randomNumber = Math.floor(Math.random() * 8);
-	// console.log(randomNumber)
-
 	const options = {
 		method: "GET",
 		headers: {
@@ -213,23 +234,6 @@ export async function fetchMoviesByGenre(genre, page, type) {
 ////////////////////////
 // My list ( Actions )
 ///////////////////////
-
-export async function getMovieFromList(movie_id) {
-	const { data } = await supabase.from("my_movies").select("*").eq("movie_id", movie_id).single();
-
-	return data;
-}
-
-export async function getMoviesFromList() {
-	const { data, error } = await supabase.from("my_movies").select("movie_id");
-
-	if (error) {
-		console.error(error);
-		throw new Error("Movies could not be found");
-	}
-
-	return data;
-}
 
 export async function getMoviesFromMyList(userId) {
 	const { data, error } = await supabase.from("my_movies").select("*").eq("user_id", userId);
