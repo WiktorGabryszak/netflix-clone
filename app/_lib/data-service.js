@@ -261,8 +261,8 @@ export async function getShowsFromMyList(userId) {
 // Profiles
 //////////////////////
 
-export async function getProfilesByUserId(id) {
-	const { data, error } = await supabase.from("profiles").select("*").eq("user_id", id);
+export async function getProfilesByUserId(user_id) {
+	const { data, error } = await supabase.from("profiles").select("*").eq("user_id", user_id);
 
 	if (error) throw new Error("There was some issue dowloading your profiles");
 
@@ -278,4 +278,12 @@ export async function addProfile(newProfile) {
 	}
 
 	return data;
+}
+
+export async function updateProfileName() {
+	const { data, error } = await supabase
+		.from("profiles")
+		.update({ profile_1_name: "otherValue" })
+		.eq("some_column", "someValue")
+		.select();
 }

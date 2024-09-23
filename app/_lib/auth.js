@@ -57,8 +57,9 @@ const authConfig = {
 				if (data.length === 0) {
 					const newProfileData = {
 						user_id: exsitingUser?.id,
-						profile_1_name: firstName,
-						profile_1_photo: "",
+						profile_name: firstName,
+						avatar_url: "",
+						preferences: { language: "en", age: 28 },
 					};
 					await addProfile(newProfileData);
 				}

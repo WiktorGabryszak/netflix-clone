@@ -11,7 +11,7 @@ async function page() {
 			<div className='flex item-center justify-center'>
 				<div className='flex flex-col'>
 					<div className='text-3xl md:text-5xl text-white text-center'>Edit your profiles</div>
-					<EditProfileComponent name={dataProfiles[0].profile_1_name} />
+					<EditProfileComponent profiles={dataProfiles} />
 				</div>
 			</div>
 		</main>
