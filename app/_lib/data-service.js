@@ -280,10 +280,8 @@ export async function addProfile(newProfile) {
 	return data;
 }
 
-export async function updateProfileName() {
-	const { data, error } = await supabase
-		.from("profiles")
-		.update({ profile_1_name: "otherValue" })
-		.eq("some_column", "someValue")
-		.select();
+export async function updateProfileName(newName, profileId) {
+	const { error } = await supabase.from("profiles").update({ profile_1_name: newName }).eq("id", profileId).select();
+
+	if (error) throw new Error("That profile could not be updated");
 }

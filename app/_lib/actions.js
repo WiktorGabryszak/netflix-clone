@@ -4,7 +4,15 @@ import { redirect } from "next/navigation";
 import { auth, signIn, signOut } from "./auth";
 import { supabase } from "./supabase";
 import { revalidatePath } from "next/cache";
-import { createUser, getMoviesFromMyList, getShowsFromMyList, getUser, login, signUp } from "./data-service";
+import {
+	createUser,
+	getMoviesFromMyList,
+	getShowsFromMyList,
+	getUser,
+	login,
+	signUp,
+	updateProfileName,
+} from "./data-service";
 
 export async function logIn(email, password) {
 	if (!email || !password) return;
@@ -54,6 +62,10 @@ export async function signUpAction(formData) {
 export async function signOutAction() {
 	await signOut({ redirectTo: "/login" });
 }
+
+//////////////////////
+// Movies and Shows
+/////////////////////
 
 export async function addMovieToList(data, matchedGenres) {
 	const session = await auth();
@@ -145,4 +157,50 @@ export async function deleteShowFromList(show_id) {
 		throw new Error("Show could not be deleted");
 	}
 	revalidatePath(`/my-list`);
+}
+
+//////////////////////////
+// Profiles
+/////////////////////////
+
+export async function addNewProfile(formData) {
+	const session = await auth();
+	console.log(formData);
+	if (!session) throw new Error("You must be logged in");
+
+	const file = formData.get("avatar_url");
+	let fileUrl;
+
+	if (file) {
+		fileUrl = URL.createObjectURL(file);
+	}
+
+	const fileName = `avatar-${session.user.userId}-${Math.random()}`;
+
+	const { error: storageError } = await supabase.storage.from("profile_photos").upload(fileName, file);
+
+	if (storageError) throw new Error(storageError.message);
+
+	const newProfileData = {
+		user_id: session.user.userId,
+		profile_name: formData.get("profile_name"),
+		avatar_url: `${process.env.SUPABASE_URL}/storage/v1/object/public/profile_photos/${fileName}`,
+		preferences: { language: "en", age: "" },
+	};
+
+	const { error } = await supabase.from("profiles").insert([newProfileData]);
+
+	if (error) {
+		console.error(error);
+		throw new Error("Profile could not be added");
+	}
+	revalidatePath(`/manage-profiles`, `/`);
+}
+
+export async function updateProfile(formData) {
+
+
+	
+	if (!newName || profileId) return;
+	await updateProfileName();
 }
