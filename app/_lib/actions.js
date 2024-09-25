@@ -7,6 +7,7 @@ import { revalidatePath } from "next/cache";
 import {
 	createUser,
 	getMoviesFromMyList,
+	getProfilesByUserId,
 	getShowsFromMyList,
 	getUser,
 	login,
@@ -165,7 +166,6 @@ export async function deleteShowFromList(show_id) {
 
 export async function addNewProfile(formData) {
 	const session = await auth();
-	console.log(formData);
 	if (!session) throw new Error("You must be logged in");
 
 	const file = formData.get("avatar_url");
@@ -198,9 +198,28 @@ export async function addNewProfile(formData) {
 }
 
 export async function updateProfile(formData) {
+	const session = await auth();
+	if (!session) throw new Error("You must be logged in");
+
+	const profiles = await getProfilesByUserId(session.user.userId);
+	const ids = formData.getAll("id");
+	const names = formData.getAll("profile_name");
+
+	for (let i = 0; i < ids.length; i++) {
+		const formId = Number(ids[i]);
+		const formName = names[i];
+
+		const profile = profiles.find((profile) => profile.id === formId);
 
 
-	
-	if (!newName || profileId) return;
-	await updateProfileName();
+		if (profile) {
+			if (profile.profile_name !== formName) {
+				await updateProfileName(formName, formId);
+			}
+		} else {
+			throw new Error("No profile found ");
+		}
+	}
+	revalidatePath("/");
+	redirect("/");
 }

@@ -16,7 +16,6 @@ function AddNewProfile() {
 		}
 	}
 
-	console.log(photoFile);
 	return (
 		<>
 			<button onClick={handleOpen}>
@@ -42,7 +41,7 @@ function AddNewProfile() {
 							{/* <div className='w-44 h-44 rounded-md flex items-center justify-center border-2 border-transparent group-hover:cursor-pointer group-hover:border-white overflow-hidden'> */}
 							<div className='w-full flex flex-col gap-2 justify-center'>
 								{/* Add images from the bucket supabase */}
-								<img src={photoFile} alt='profile picture' className="w-44 h-44 rounded-md items-center" />
+								<img src={photoFile} alt='profile picture' className='w-44 h-44 rounded-md items-center' />
 								<input type='file' name='avatar_url' onChange={onImageChange} />
 							</div>
 						</div>

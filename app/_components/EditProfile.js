@@ -2,6 +2,7 @@ import { useState } from "react";
 
 function EditProfile({ profile }) {
 	const [profileName, setProfileName] = useState(profile.profile_name);
+
 	return (
 		<>
 			<div className='group flex flex-col w-44 mx-auto gap-2'>
@@ -10,7 +11,9 @@ function EditProfile({ profile }) {
 				</div>
 
 				<div className='text-gray-400 text-2xl text-center group-hover:text-white'>
+					<input name='id' value={profile.id} hidden />
 					<input
+						name='profile_name'
 						type='text'
 						value={profileName}
 						onChange={(e) => setProfileName(e.target.value)}
