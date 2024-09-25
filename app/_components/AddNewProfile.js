@@ -6,7 +6,7 @@ import { addNewProfile } from "../_lib/actions";
 function AddNewProfile() {
 	const [open, setOpen] = useState(false);
 	const [name, setName] = useState("");
-	const [photoFile, setPhotoFile] = useState(null);
+	const [photoFile, setPhotoFile] = useState("profile1.png");
 	const handleOpen = () => setOpen(true);
 	const handleClose = () => setOpen(false);
 
@@ -39,10 +39,13 @@ function AddNewProfile() {
 					<section className='flex flex-col gap-6'>
 						<div className='flex w-full items-center justify-center'>
 							{/* <div className='w-44 h-44 rounded-md flex items-center justify-center border-2 border-transparent group-hover:cursor-pointer group-hover:border-white overflow-hidden'> */}
-							<div className='w-full flex flex-col gap-2 justify-center'>
+							<div className='w-full flex flex-col gap-2 justify-center items-center'>
 								{/* Add images from the bucket supabase */}
 								<img src={photoFile} alt='profile picture' className='w-44 h-44 rounded-md items-center' />
-								<input type='file' name='avatar_url' onChange={onImageChange} />
+								<label for='avatar_url' className='cursor-pointer text-center text-zinc-50 font-semibold mt-2 hover:underline'>
+									Upload Avatar
+								</label>
+								<input type='file' name='avatar_url' id='avatar_url' onChange={onImageChange} className="opacity-0 absolute -z-[1]" />
 							</div>
 						</div>
 						<div className='flex items-center justify-center w-full'>

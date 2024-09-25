@@ -211,7 +211,6 @@ export async function updateProfile(formData) {
 
 		const profile = profiles.find((profile) => profile.id === formId);
 
-
 		if (profile) {
 			if (profile.profile_name !== formName) {
 				await updateProfileName(formName, formId);
@@ -220,6 +219,18 @@ export async function updateProfile(formData) {
 			throw new Error("No profile found ");
 		}
 	}
-	revalidatePath("/");
+	revalidatePath("/", "/manage-profiles");
 	redirect("/");
+}
+
+export async function setActiveProfile(profileId) {
+
+
+
+	
+	const { error } = await supabase.from("profiles").update({ is_active: true }).eq("id", profileId);
+
+	if (error) {
+		throw new Error("Ther was an issue settingactive profile");
+	}
 }

@@ -10,7 +10,7 @@ import profile1 from "@/public/profile1.png";
 import { BellIcon, ChevronDownIcon, MagnifyingGlassIcon, PencilIcon, UserIcon } from "@heroicons/react/24/solid";
 import { Divider, ListItemIcon, MenuItem, MenuList, Paper } from "@mui/material";
 
-export default function ProfileButtons() {
+export default function ProfileButtons({ profiles }) {
 	const [isHoverProfile, setIsHoverProfile] = useState(false);
 	const [isOpenInput, setIsOpenInput] = useState(false);
 	const [queryValue, setQueryValue] = useState("");
@@ -75,14 +75,21 @@ export default function ProfileButtons() {
 						onMouseEnter={() => setIsHoverProfile(true)}
 						onMouseLeave={() => setIsHoverProfile(false)}>
 						<MenuList className='bg-zinc-950 text-zinc-100 rounded-none border border-zinc-700'>
-							<MenuItem>
-								<Link href='' className='flex items-center gap-2 text-sm hover:underline w-full'>
-									<ListItemIcon>
-										<img src='/profile1.png' alt='profile picture' className='w-8 h-8 rounded-md' />
-									</ListItemIcon>
-									<p>Name</p>
-								</Link>
-							</MenuItem>
+							{profiles.map((profile) => (
+								<MenuItem key={profile.id}>
+									<Link href='/' className='flex items-center gap-2 text-sm hover:underline w-full'>
+										<ListItemIcon>
+											<img
+												src={profile.avatar_url ? profile.avatar_url : "profile1.png"}
+												alt='profile picture'
+												className='w-8 h-8 rounded-md'
+											/>
+										</ListItemIcon>
+										<p>{profile.profile_name}</p>
+									</Link>
+								</MenuItem>
+							))}
+
 							<MenuItem>
 								<Link href='' className='flex items-center gap-2 text-sm hover:underline w-full'>
 									<ListItemIcon>

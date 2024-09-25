@@ -7,9 +7,11 @@ export default async function ProfileComponent() {
 	const { user: userData } = user;
 	const dataProfiles = await getProfilesByUserId(userData?.userId);
 
+	console.log(dataProfiles[0].avatar_url);
+
 	return (
 		<div className='flex flex-col items-center justify-center gap-8 mt-10'>
-			<div className="flex items-center gap-4">
+			<div className='flex items-center gap-4'>
 				{dataProfiles.map((profile) => (
 					<Link href='/browse' key={profile.id}>
 						<div className='group flex-row w-44 mx-auto'>

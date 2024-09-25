@@ -9,7 +9,7 @@ import Navigation from "./Navigation";
 import ProfileButtons from "./ProfileButton";
 import netflixIcon from "@/public/netflix.png";
 
-export default function HeaderContent({ children }) {
+export default function HeaderContent({ children, profiles }) {
 	const [isScrolled, setIsScrolled] = useState(false);
 	const pathname = usePathname();
 
@@ -37,7 +37,7 @@ export default function HeaderContent({ children }) {
 					</Link>
 					<Navigation />
 				</section>
-				<ProfileButtons />
+				<ProfileButtons profiles={profiles} />
 			</div>
 			{pathname === "/browse/tv-shows" && children}
 			{pathname === "/browse/movies" && children}
