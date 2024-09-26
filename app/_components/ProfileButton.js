@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { signOutAction } from "../_lib/actions";
+import { setActiveProfile, signOutAction } from "../_lib/actions";
 import { useRouter, useSearchParams } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
@@ -17,6 +17,14 @@ export default function ProfileButtons({ profiles }) {
 
 	const searchParams = useSearchParams();
 	const { replace } = useRouter();
+
+	const activeProfile = profiles.find((profile) => profile.is_active === true);
+
+	const [clicked, setClicked] = useState(null);
+
+	function handleClick() {
+		setActiveProfile(clicked);
+	}
 
 	function handleSubmit(e) {
 		e.preventDefault();
@@ -62,7 +70,11 @@ export default function ProfileButtons({ profiles }) {
 				<BellIcon className='w-6 h-6 text-neutral-50' />
 			</button> */}
 			<div className='flex items-center gap-1 hover:cursor-pointer' onMouseEnter={() => setIsHoverProfile(true)}>
-				<Image src={profile1} width={32} height={32} className='rounded-md' alt='Profile Image of User' />
+				<img
+					src={activeProfile.avatar_url === "" ? profile1 : activeProfile.avatar_url}
+					className='rounded-md w-8 h-8'
+					alt='Profile Image of User'
+				/>
 				<button className='relative'>
 					<ChevronDownIcon
 						className={`w-4 h-4 text-neutral-100 ${isHoverProfile && "rotate-180 transition duration-300"} `}
@@ -75,23 +87,27 @@ export default function ProfileButtons({ profiles }) {
 						onMouseEnter={() => setIsHoverProfile(true)}
 						onMouseLeave={() => setIsHoverProfile(false)}>
 						<MenuList className='bg-zinc-950 text-zinc-100 rounded-none border border-zinc-700'>
-							{profiles.map((profile) => (
-								<MenuItem key={profile.id}>
-									<Link href='/' className='flex items-center gap-2 text-sm hover:underline w-full'>
-										<ListItemIcon>
-											<img
-												src={profile.avatar_url ? profile.avatar_url : "profile1.png"}
-												alt='profile picture'
-												className='w-8 h-8 rounded-md'
-											/>
-										</ListItemIcon>
-										<p>{profile.profile_name}</p>
-									</Link>
-								</MenuItem>
-							))}
+							<form action={handleClick}>
+								{profiles.map((profile) => (
+									<MenuItem key={profile.id}>
+										<button
+											className='flex items-center gap-2 text-sm hover:underline w-full'
+											onClick={() => setClicked(profile.id)}>
+											<ListItemIcon>
+												<img
+													src={profile.avatar_url ? profile.avatar_url : "profile1.png"}
+													alt='profile picture'
+													className='w-8 h-8 rounded-md'
+												/>
+											</ListItemIcon>
+											<p>{profile.profile_name}</p>
+										</button>
+									</MenuItem>
+								))}
+							</form>
 
 							<MenuItem>
-								<Link href='' className='flex items-center gap-2 text-sm hover:underline w-full'>
+								<Link href='/manage-profiles' className='flex items-center gap-2 text-sm hover:underline w-full'>
 									<ListItemIcon>
 										<PencilIcon className='h-7 w-7 text-zinc-100 text-center' />
 									</ListItemIcon>

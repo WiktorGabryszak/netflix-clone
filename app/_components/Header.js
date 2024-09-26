@@ -6,6 +6,8 @@ import HeaderContent from "./HeaderContent";
 export default async function Header() {
 	const session = await auth();
 	const profiles = await getProfilesByUserId(session.user.userId);
+
+	
 	return (
 		<>
 			<HeaderContent profiles={profiles}>

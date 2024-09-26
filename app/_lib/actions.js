@@ -224,13 +224,24 @@ export async function updateProfile(formData) {
 }
 
 export async function setActiveProfile(profileId) {
+	const session = await auth();
+	if (!session) throw new Error("You must be logged in");
 
+	const profiles = await getProfilesByUserId(session.user.userId);
 
+	for (let i = 0; i < profiles.length; i++) {
+		if (profiles[i].id === profileId) {
 
-	
-	const { error } = await supabase.from("profiles").update({ is_active: true }).eq("id", profileId);
+			const { error } = await supabase.from("profiles").update({ is_active: true }).eq("id", profiles[i].id);
+			if (error) throw new Error("There was an issue settings active to true");
 
-	if (error) {
-		throw new Error("Ther was an issue settingactive profile");
+		} else if (profiles[i].id !== profileId) {
+
+			const { error } = await supabase.from("profiles").update({ is_active: false }).eq("id", profiles[i].id);
+			if (error) throw new Error("There was an issue settings active to false");
+		}
 	}
+
+	revalidatePath('/browse')
+	redirect("/browse");
 }
