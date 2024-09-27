@@ -1,7 +1,6 @@
 "use client";
 
 import Link from "next/link";
-import { updateProfile } from "../_lib/actions";
 import AddNewProfile from "./AddNewProfile";
 import EditProfile from "./EditProfile";
 
@@ -9,7 +8,7 @@ function EditProfileComponent({ profiles }) {
 	return (
 		<div className='flex flex-col items-center justify-center gap-2 mt-10'>
 			<div className='flex gap-4'>
-				<div className='flex flex-col items-center gap-2' >
+				<div className='flex flex-col items-center gap-2'>
 					<div className='flex items-start gap-4'>
 						{profiles.map((profile) => (
 							<EditProfile key={profile.id} profile={profile} />

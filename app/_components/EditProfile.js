@@ -1,9 +1,8 @@
 import { useState } from "react";
-import RemoveProfile from "./RemoveProfile";
-import { CheckIcon } from "@heroicons/react/24/solid";
 import { updateProfile } from "../_lib/actions";
+import RemoveProfile from "./RemoveProfile";
 
-function EditProfile({ profile }) {
+export default function EditProfile({ profile }) {
 	const [profileName, setProfileName] = useState(profile.profile_name);
 	const [error, setError] = useState("");
 	const [isChanged, setIsChanged] = useState(false);
@@ -57,5 +56,3 @@ function EditProfile({ profile }) {
 		</>
 	);
 }
-
-export default EditProfile;

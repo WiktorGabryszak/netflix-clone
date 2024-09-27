@@ -1,9 +1,8 @@
+import { getProfilesByUserId } from "../_lib/data-service";
+import { auth } from "../_lib/auth";
 import Image from "next/image";
 import Link from "next/link";
 import netflixIcon from "@/public/netflix.png";
-import profileIcon from "@/public/profile1.png";
-import { auth } from "../_lib/auth";
-import { getProfilesByUserId } from "../_lib/data-service";
 
 export default async function AccountHeader() {
 	const session = await auth();

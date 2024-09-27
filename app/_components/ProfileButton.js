@@ -70,7 +70,7 @@ export default function ProfileButtons({ profiles }) {
 			</button> */}
 			<div className='flex items-center gap-1 hover:cursor-pointer' onMouseEnter={() => setIsHoverProfile(true)}>
 				<img
-					src={activeProfile.avatar_url === "" ? profile1 : activeProfile.avatar_url}
+					src={activeProfile?.avatar_url === "" ? profile1 : activeProfile?.avatar_url}
 					className='rounded-md w-8 h-8'
 					alt='Profile Image of User'
 				/>

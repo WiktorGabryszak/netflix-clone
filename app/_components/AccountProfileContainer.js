@@ -1,9 +1,8 @@
 import { auth } from "@/app/_lib/auth";
 import { getProfilesByUserId } from "@/app/_lib/data-service";
 import { ChevronRightIcon } from "@heroicons/react/24/outline";
-import profile1 from "@/public/profile1.png";
-import Link from "next/link";
 import { PlusIcon } from "@heroicons/react/24/solid";
+import Link from "next/link";
 
 export default async function AccountProfileContainer() {
 	const session = await auth();

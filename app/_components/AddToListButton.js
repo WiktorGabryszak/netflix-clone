@@ -5,7 +5,6 @@ import { CheckIcon, PlusIcon } from "@heroicons/react/24/solid";
 import { usePathname } from "next/navigation";
 
 export default function AddToListButton({ data, isMovieAdded, matchedGenres, genres, isShowAdded }) {
-	
 	const pathname = usePathname();
 	function handleAdd(e) {
 		e.preventDefault();

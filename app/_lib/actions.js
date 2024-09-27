@@ -231,7 +231,7 @@ export async function removeProfile(profileId) {
 	const profiles = await getProfilesByUserId(session.user.userId);
 	const profile = profiles.find((profile) => profile.id === profileId);
 
-	if (profile.is_default !== true) {
+	if (profile?.is_default !== true) {
 		const { error } = await supabase.from("profiles").delete().eq("id", profileId);
 
 		if (error) throw new Error("Profile could not be deleted");
