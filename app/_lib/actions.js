@@ -1,24 +1,23 @@
 "use server";
 
-import { redirect } from "next/navigation";
-import { auth, signIn, signOut } from "./auth";
-import { supabase } from "./supabase";
-import { revalidatePath } from "next/cache";
 import {
 	createUser,
 	getMoviesFromMyList,
 	getProfilesByUserId,
 	getShowsFromMyList,
 	getUser,
-	login,
 	signUp,
 	updateProfileName,
 } from "./data-service";
+import { auth, signIn, signOut } from "./auth";
+import { revalidatePath } from "next/cache";
+import { redirect } from "next/navigation";
+import { supabase } from "./supabase";
 
 export async function logIn(email, password) {
 	if (!email || !password) return;
 
-	const { data: users, error } = await supabase.from("users").select("*").eq("email", email).eq("password", password);
+	const { error } = await supabase.from("users").select("*").eq("email", email).eq("password", password);
 
 	if (error) {
 		console.error("Login error:", error.message);
@@ -28,11 +27,6 @@ export async function logIn(email, password) {
 	await signIn("credentials", { redirectTo: "/" });
 
 	redirect("/");
-
-	// const { data, error } = await supabase.auth.signInWithPassword({
-	// 	email,
-	// 	password,
-	// });
 }
 
 export async function signInWithGoogleAction() {
@@ -49,16 +43,16 @@ export async function singUp(email, password) {
 	redirect("/");
 }
 
-export async function signUpAction(formData) {
-	const email = formData.get("email");
-	const password = formData.get("password");
-	const repeatPassword = formData.get("repeatPassword");
+// export async function signUpAction(formData) {
+// 	const email = formData.get("email");
+// 	const password = formData.get("password");
+// 	const repeatPassword = formData.get("repeatPassword");
 
-	if (!email || !password) return;
+// 	if (!email || !password) return;
 
-	await signUp({ email, password });
-	redirect("/");
-}
+// 	await signUp({ email, password });
+// 	redirect("/");
+// }
 
 export async function signOutAction() {
 	await signOut({ redirectTo: "/login" });
@@ -127,8 +121,6 @@ export async function deleteMovieFromList(movie_id) {
 	const userMovies = await getMoviesFromMyList(session.user.userId);
 	const userMoviesIds = userMovies.map((movie) => movie.movie_id);
 
-	console.log(userMovies);
-
 	if (!userMoviesIds.includes(movie_id)) throw new Error("You are not allowed to delete this movie");
 
 	const { error } = await supabase.from("my_movies").delete().eq("movie_id", movie_id);
@@ -146,8 +138,6 @@ export async function deleteShowFromList(show_id) {
 
 	const userShows = await getShowsFromMyList(session.user.userId);
 	const userShowsIds = userShows.map((show) => show.show_id);
-
-	console.log(!userShowsIds.includes(show_id));
 
 	if (!userShowsIds.includes(show_id)) throw new Error("You are not allowed to delete this show");
 
@@ -169,23 +159,27 @@ export async function addNewProfile(formData) {
 	if (!session) throw new Error("You must be logged in");
 
 	const file = formData.get("avatar_url");
-	let fileUrl;
-
-	if (file) {
-		fileUrl = URL.createObjectURL(file);
-	}
-
 	const fileName = `avatar-${session.user.userId}-${Math.random()}`;
 
-	const { error: storageError } = await supabase.storage.from("profile_photos").upload(fileName, file);
+	let avatarUrl;
 
-	if (storageError) throw new Error(storageError.message);
+	if (file.name !== "undefined") {
+		const { error: storageError } = await supabase.storage.from("profile_photos").upload(fileName, file);
+		if (storageError) throw new Error(storageError.message);
+		avatarUrl = fileName;
+	}
+
+	if (file.name === "undefined") {
+		avatarUrl = "default";
+	}
 
 	const newProfileData = {
 		user_id: session.user.userId,
 		profile_name: formData.get("profile_name"),
-		avatar_url: `${process.env.SUPABASE_URL}/storage/v1/object/public/profile_photos/${fileName}`,
+		avatar_url: `${process.env.SUPABASE_URL}/storage/v1/object/public/profile_photos/${avatarUrl}`,
 		preferences: { language: "en", age: "" },
+		is_active: false,
+		is_default: false,
 	};
 
 	const { error } = await supabase.from("profiles").insert([newProfileData]);
@@ -201,26 +195,49 @@ export async function updateProfile(formData) {
 	const session = await auth();
 	if (!session) throw new Error("You must be logged in");
 
-	const profiles = await getProfilesByUserId(session.user.userId);
-	const ids = formData.getAll("id");
-	const names = formData.getAll("profile_name");
+	// const profiles = await getProfilesByUserId(session.user.userId);
+	const id = formData.get("id");
+	const name = formData.get("profile_name");
 
-	for (let i = 0; i < ids.length; i++) {
-		const formId = Number(ids[i]);
-		const formName = names[i];
-
-		const profile = profiles.find((profile) => profile.id === formId);
-
-		if (profile) {
-			if (profile.profile_name !== formName) {
-				await updateProfileName(formName, formId);
-			}
-		} else {
-			throw new Error("No profile found ");
-		}
+	if (name) {
+		await updateProfileName(name, id);
 	}
+
+	// for (let i = 0; i < ids.length; i++) {
+	// 	const formId = Number(ids[i]);
+	// 	const formName = names[i];
+
+	// 	const profile = profiles.find((profile) => profile.id === formId);
+
+	// 	if (profile) {
+	// 		if (profile.profile_name !== formName) {
+	// 			await updateProfileName(formName, formId);
+	// 		}
+	// 	} else {
+	// 		throw new Error("No profile found ");
+	// 	}
+	// }
+	// const profile = profiles.find((profile) => profile.id === id);
+
+	// console.log(profile);
+
 	revalidatePath("/", "/manage-profiles");
-	redirect("/");
+}
+
+export async function removeProfile(profileId) {
+	const session = await auth();
+	if (!session) throw new Error("You must be logged in");
+
+	const profiles = await getProfilesByUserId(session.user.userId);
+	const profile = profiles.find((profile) => profile.id === profileId);
+
+	if (profile.is_default !== true) {
+		const { error } = await supabase.from("profiles").delete().eq("id", profileId);
+
+		if (error) throw new Error("Profile could not be deleted");
+	}
+
+	revalidatePath("/", "/manage-profiles");
 }
 
 export async function setActiveProfile(profileId) {
@@ -231,17 +248,14 @@ export async function setActiveProfile(profileId) {
 
 	for (let i = 0; i < profiles.length; i++) {
 		if (profiles[i].id === profileId) {
-
 			const { error } = await supabase.from("profiles").update({ is_active: true }).eq("id", profiles[i].id);
 			if (error) throw new Error("There was an issue settings active to true");
-
 		} else if (profiles[i].id !== profileId) {
-
 			const { error } = await supabase.from("profiles").update({ is_active: false }).eq("id", profiles[i].id);
 			if (error) throw new Error("There was an issue settings active to false");
 		}
 	}
 
-	revalidatePath('/browse')
+	revalidatePath("/browse");
 	redirect("/browse");
 }

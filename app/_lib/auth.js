@@ -58,8 +58,10 @@ const authConfig = {
 					const newProfileData = {
 						user_id: exsitingUser?.id,
 						profile_name: firstName,
-						avatar_url: "profile1.png",
+						avatar_url: "https://blwjabmlaqkrlojvhjab.supabase.co/storage/v1/object/public/profile_photos/default",
 						preferences: { language: "en", age: 28 },
+						is_active: false,
+						is_default: true,
 					};
 					await addProfile(newProfileData);
 				}

@@ -1,13 +1,12 @@
 "use client";
 
+import Link from "next/link";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";
 import { setActiveProfile, signOutAction } from "../_lib/actions";
-import { useRouter, useSearchParams } from "next/navigation";
-import Image from "next/image";
-import Link from "next/link";
 
 import profile1 from "@/public/profile1.png";
-import { BellIcon, ChevronDownIcon, MagnifyingGlassIcon, PencilIcon, UserIcon } from "@heroicons/react/24/solid";
+import { ChevronDownIcon, MagnifyingGlassIcon, PencilIcon, UserIcon } from "@heroicons/react/24/solid";
 import { Divider, ListItemIcon, MenuItem, MenuList, Paper } from "@mui/material";
 
 export default function ProfileButtons({ profiles }) {
