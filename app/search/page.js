@@ -2,7 +2,18 @@ import Footer from "../_components/Footer";
 import Header from "../_components/Header";
 import MovieItem from "../_components/MovieItem";
 import { auth } from "../_lib/auth";
-import { fetchMovieByQuery, fetchMoviesGenres, fetchShowByQuery, fetchShowsGenres, getMoviesFromMyList, getShowsFromMyList } from "../_lib/data-service";
+import {
+	fetchMovieByQuery,
+	fetchMoviesGenres,
+	fetchShowByQuery,
+	fetchShowsGenres,
+	getMoviesFromMyList,
+	getShowsFromMyList,
+} from "../_lib/data-service";
+
+export const metadata = {
+	title: "Search",
+};
 
 export default async function page({ searchParams }) {
 	const movieGenres = await fetchMoviesGenres();

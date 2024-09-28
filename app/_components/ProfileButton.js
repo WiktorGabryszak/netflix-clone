@@ -13,15 +13,15 @@ export default function ProfileButtons({ profiles }) {
 	const [isHoverProfile, setIsHoverProfile] = useState(false);
 	const [isOpenInput, setIsOpenInput] = useState(false);
 	const [queryValue, setQueryValue] = useState("");
+	const [clicked, setClicked] = useState(null);
 
 	const searchParams = useSearchParams();
 	const { replace } = useRouter();
 
 	const activeProfile = profiles.find((profile) => profile.is_active === true);
 
-	const [clicked, setClicked] = useState(null);
-
 	function handleClick() {
+		if (activeProfile.id === clicked) return;
 		setActiveProfile(clicked);
 	}
 

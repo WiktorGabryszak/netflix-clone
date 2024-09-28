@@ -1,7 +1,6 @@
 import Link from "next/link";
 import { auth } from "../_lib/auth";
 import { getProfilesByUserId } from "../_lib/data-service";
-import { setActiveProfile } from "../_lib/actions";
 import Profile from "./Profile";
 
 export default async function ProfileComponent() {

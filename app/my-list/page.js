@@ -19,7 +19,7 @@ async function page() {
 	return (
 		<div className='bg-zinc-900 h-full'>
 			<Header />
-			<main className='px-14 py-7 flex flex-col gap-8'>
+			<main className='px-14 py-7 flex flex-col gap-8 h-full'>
 				<h2 className='text-zinc-100 text-4xl font-normal'>My List</h2>
 				<div className='flex flex-wrap gap-2 overflow-x-scroll scrollbar-hide rounded-md w-[1920px]'>
 					{moviesOnList.map((movie) => (
