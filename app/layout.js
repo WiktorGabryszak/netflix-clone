@@ -12,11 +12,13 @@ export const metadata = {
 		template: "%s - Netflix",
 		default: "Home - Netflix",
 	},
+	other: { pinterest: "nopin" },
 };
 
 export default async function RootLayout({ children }) {
 	return (
 		<html lang='en'>
+			<meta name='google-site-verification' content='yE9T6dQehzq32QWzLk4rxiRXJMOMFDdwlb2UniO5olI' />
 			<body className={`${roboto.className}`}>{children}</body>
 		</html>
 	);
